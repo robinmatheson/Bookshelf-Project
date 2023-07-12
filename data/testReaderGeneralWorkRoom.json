@@ -1,16 +1,16 @@
 {
     "books": [
         {
+            "author": "Alice Oseman",
+            "rating": 5,
+            "title": "Heartstopper",
+            "status": "CURRENTLYREADING"
+        },
+        {
             "author": "Sarah J. Maas",
             "rating": 0,
             "title": "Kingdom of Ash",
             "status": "CURRENTLYREADING"
-        },
-        {
-            "author": "Alice Oseman",
-            "rating": 5,
-            "title": "Heartstopper",
-            "status": "READ"
         }
     ],
     "goal": 0,

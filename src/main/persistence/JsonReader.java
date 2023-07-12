@@ -66,9 +66,22 @@ public class JsonReader {
     private void addBook(Bookshelf bs, JSONObject jsonObject) {
         String title = jsonObject.getString("title");
         String author = jsonObject.getString("author");
-        BookStatus status = BookStatus.valueOf(jsonObject.getString("status"));
+        String status = statusToString(BookStatus.valueOf(jsonObject.getString("status")));
         int rating = jsonObject.getInt("rating");
         Book book = new Book(title, author, status, rating);
         bs.shelveBook(book);
+    }
+
+    // EFFECTS: converts a BookStatus to a string
+    private String statusToString(BookStatus status) {
+        String ret = null;
+        if (status == BookStatus.READ) {
+            ret = "r";
+        } else if (status == BookStatus.TOBEREAD) {
+            ret = "tbr";
+        } else if (status == BookStatus.CURRENTLYREADING) {
+            ret = "cr";
+        }
+        return ret;
     }
 }

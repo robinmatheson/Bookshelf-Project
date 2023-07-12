@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,9 +50,9 @@ public class JsonReaderTest extends JsonTest {
     void testReaderGeneralBookshelf() {
         try {
             Bookshelf bs = new Bookshelf("My Bookshelf");
-            bs.shelveBook(new Book("Kingdom of Ash", "Sarah J. Maas", BookStatus.CURRENTLYREADING,
+            bs.shelveBook(new Book("Kingdom of Ash", "Sarah J. Maas", "cr",
                     0));
-            bs.shelveBook(new Book("Heartstopper", "Alice Oseman", BookStatus.READ, 5));
+            bs.shelveBook(new Book("Heartstopper", "Alice Oseman", "cr", 5));
             JsonWriter writer = new JsonWriter("./data/testReaderGeneralWorkRoom.json");
             writer.open();
             writer.write(bs);
@@ -60,11 +61,11 @@ public class JsonReaderTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
             Bookshelf newBS = reader.read();
             assertEquals("My Bookshelf", newBS.getName());
-            DefaultListModel<Book> books = newBS.getBooks();
+            HashMap<String, Book> books = newBS.getBooks();
             assertEquals(2, books.size());
             checkBook("Kingdom of Ash", "Sarah J. Maas", BookStatus.CURRENTLYREADING, 0,
-                    books.get(0));
-            checkBook("Heartstopper", "Alice Oseman", BookStatus.READ, 5, books.get(1));
+                    books.get("Kingdom of Ash"));
+            checkBook("Heartstopper", "Alice Oseman", BookStatus.CURRENTLYREADING, 5, books.get("Heartstopper"));
         } catch (IOException e) {
             fail();
         }

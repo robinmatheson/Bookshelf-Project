@@ -303,9 +303,10 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: opens new scroller with list of books in bookshelf
     private void openShelfDisplay() {
         DefaultListModel<String> booksInfo = new DefaultListModel<>();
-        for (int i = 0; i < bs.getCardinality(); i++) {
-            Book book = bs.getBooks().getElementAt(i);
-            String info = book.getTitle() + ", " + book.getAuthor() + ", " + book.getStatus() + ", " + book.getRating()
+        Iterator<Book> it = bs.getBooksIterator();
+        while (it.hasNext()) {
+            Book b = it.next();
+            String info = b.getTitle() + ", " + b.getAuthor() + ", " + b.getStatus() + ", " + b.getRating()
                     + " stars";
             booksInfo.addElement(info);
         }
@@ -321,6 +322,16 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.setVisible(true);
     }
+
+    // can't figure out how to include emoji since it is a character
+//    // EFFECTS: returns a string of star emojis of the given length
+//    private String getStarEmojis(int num) {
+//        String str = "";
+//        for (int i = 0; i < num; i++) {
+//            str += new String(Character.toChars(&#x2B50));
+//        }
+//        return str;
+//    }
 
     // EFFECTS: listens for actions performed and executes methods when detected
     @Override

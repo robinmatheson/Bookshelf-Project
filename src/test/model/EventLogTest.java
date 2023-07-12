@@ -32,7 +32,7 @@ public class EventLogTest {
     @Test
     public void testAddBook() {
         bs = new Bookshelf("Mine");
-        bs.shelveBook(new Book("Heartstopper", "Alice Oseman", BookStatus.READ, 5));
+        bs.shelveBook(new Book("Heartstopper", "Alice Oseman", "r", 5));
         itr = el.iterator();
         itr.next();
         itr.next();
@@ -43,8 +43,8 @@ public class EventLogTest {
     @Test
     public void testBurnBook() {
         bs = new Bookshelf("Mine");
-        bs.shelveBook(new Book("Heartstopper", "Alice Oseman", BookStatus.READ, 5));
-        bs.shelveBook(new Book("Babel", "RF Kuang", BookStatus.TOBEREAD, 0));
+        bs.shelveBook(new Book("Heartstopper", "Alice Oseman", "r", 5));
+        bs.shelveBook(new Book("Babel", "RF Kuang", "tbr", 0));
         bs.burnBook("Heartstopper");
         itr = el.iterator();
         itr.next();

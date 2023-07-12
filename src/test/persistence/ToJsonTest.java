@@ -16,7 +16,7 @@ public class ToJsonTest {
 
     @Test
     public void testToJsonBook() {
-        Book book = new Book("A", "B", BookStatus.TOBEREAD, 0);
+        Book book = new Book("A", "B", "tbr", 0);
         JSONObject obj = book.toJson();
         obj.has("title");
         obj.has("author");
@@ -32,8 +32,8 @@ public class ToJsonTest {
     public void testToJsonBookshelf() {
         Bookshelf bs = new Bookshelf("Mine");
         bs.setGoal(13);
-        bs.shelveBook(new Book("A", "B", BookStatus.TOBEREAD, 0));
-        bs.shelveBook(new Book("C", "D", BookStatus.CURRENTLYREADING, 3));
+        bs.shelveBook(new Book("A", "B", "tbr", 0));
+        bs.shelveBook(new Book("C", "D", "cr", 3));
         JSONObject obj1 = bs.toJson();
         obj1.has("name");
         obj1.has("books");
