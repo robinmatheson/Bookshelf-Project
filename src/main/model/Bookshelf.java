@@ -30,6 +30,7 @@ public class Bookshelf implements Writable {
     // EFFECTS: sets goal to int given
     public void setGoal(int goal) {
         this.goal = goal;
+        EventLog.getInstance().logEvent(new Event("Set reading goal to " + goal + " books."));
     }
 
     // MODIFIES: this
@@ -49,21 +50,10 @@ public class Bookshelf implements Writable {
     }
 
     // EFFECTS: returns true if the book is in the bookshelf
+    // TODO: make this by title (key for hashmap)
     public boolean inBookshelf(Book book) {
         return books.contains(book);
     }
-
-//    // EFFECTS: returns true if the book is in the bookshelf
-//    public boolean inBookshelf(String title) {
-//        boolean isInBookshelf = false;
-//        for (Book b : books) {
-//            if (Objects.equals(b.getTitle(), title)) {
-//                isInBookshelf = true;
-//                break;
-//            }
-//        }
-//        return isInBookshelf;
-//    }
 
     // MODIFIES: this
     // EFFECTS: removes book from the bookshelf
@@ -80,6 +70,7 @@ public class Bookshelf implements Writable {
 
     // getters
 
+    // TODO
     // REQUIRES: book is already in bookshelf
     // EFFECTS: returns given book in bookshelf
 //    public Book getBook(String title) {
@@ -92,6 +83,7 @@ public class Bookshelf implements Writable {
 //        return hereItIs.get(0);
 //    }
 //
+      // TODO
 //    // EFFECTS: returns list of titles of all the books in the bookshelf
 //    public ArrayList<String> getAllBooks() {
 //        ArrayList<String> allBooks = new ArrayList<>();
@@ -100,84 +92,7 @@ public class Bookshelf implements Writable {
 //        }
 //        return allBooks;
 //    }
-//
-//    // EFFECTS: returns list titles of all the books in the bookshelf of given status
-//    public ArrayList<String> getBooksOfStatus(BookStatus status) {
-//        ArrayList<String> allBooksOfStatus = new ArrayList<>();
-//        if (status == BookStatus.TOBEREAD) {
-//            for (Book b : books) {
-//                if (b.getStatus() == BookStatus.TOBEREAD) {
-//                    allBooksOfStatus.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (status == BookStatus.CURRENTLYREADING) {
-//            for (Book b : books) {
-//                if (b.getStatus() == BookStatus.CURRENTLYREADING) {
-//                    allBooksOfStatus.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (status == BookStatus.READ) {
-//            for (Book b : books) {
-//                if (b.getStatus() == BookStatus.READ) {
-//                    allBooksOfStatus.add(b.getTitle());
-//                }
-//            }
-//        }
-//        return allBooksOfStatus;
-//    }
-//
-//    // REQUIRES: rating must be an integer between 0 and 5, inclusive
-//    // EFFECTS: returns titles of all books with given rating
-//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-//    public ArrayList<String> getBooksOfRating(int rating) {
-//        ArrayList<String> allBooksOfRating = new ArrayList<>();
-//        if (rating == 0) {
-//            for (Book b : books) {
-//                if (b.getRating() == 0) {
-//                    allBooksOfRating.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (rating == 1) {
-//            for (Book b : books) {
-//                if (b.getRating() == 1) {
-//                    allBooksOfRating.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (rating == 2) {
-//            for (Book b : books) {
-//                if (b.getRating() == 2) {
-//                    allBooksOfRating.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (rating == 3) {
-//            for (Book b : books) {
-//                if (b.getRating() == 3) {
-//                    allBooksOfRating.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (rating == 4) {
-//            for (Book b : books) {
-//                if (b.getRating() == 4) {
-//                    allBooksOfRating.add(b.getTitle());
-//                }
-//            }
-//        }
-//        if (rating == 5) {
-//            for (Book b : books) {
-//                if (b.getRating() == 5) {
-//                    allBooksOfRating.add(b.getTitle());
-//                }
-//            }
-//        }
-//        return allBooksOfRating;
-//    }
-//
+//    // TODO
 //    // EFFECTS: returns a string with the number of books read out of the goal number read
 //    public String getGoalProgress() {
 //        int read = getNumberRead();
@@ -191,6 +106,7 @@ public class Bookshelf implements Writable {
         return books.size();
     }
 //
+      // TODO
 //    // EFFECTS: returns the number of books of status READ on the bookshelf
 //    public int getNumberRead() {
 //        int count = 0;
