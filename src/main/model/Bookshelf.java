@@ -1,27 +1,26 @@
 package model;
 
-import model.Book;
-import model.BookStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 // represents all the books that are added to the user's bookshelf
 public class Bookshelf implements Writable {
 
     private String name;
-    private DefaultListModel<Book> books;
+    private HashMap<String, Book> books; // key = title, value = book
     private int goal;
 
     // EFFECTS: constructs a bookshelf with given name and owner's name
     public Bookshelf(String name) {
         this.name = name;
         this.goal = 0;
-        this.books = new DefaultListModel<>();
+        this.books = new HashMap<>();
         EventLog.getInstance().logEvent(new Event("Made bookshelf called " + getName()));
     }
 
@@ -43,87 +42,72 @@ public class Bookshelf implements Writable {
     // MODIFIES: this
     // EFFECTS: adds book to list of books in the bookshelf
     public void shelveBook(Book book) {
-        if (!inBookshelf(book)) {
-            books.addElement(book);
-        }
+        books.put(book.getTitle(), book);
         EventLog.getInstance().logEvent(new Event("Added " + book.getTitle() + " to bookshelf"));
     }
 
     // EFFECTS: returns true if the book is in the bookshelf
-    // TODO: make this by title (key for hashmap)
-    public boolean inBookshelf(Book book) {
-        return books.contains(book);
+    public boolean inBookshelf(String title) {
+        return books.containsKey(title);
     }
 
     // MODIFIES: this
     // EFFECTS: removes book from the bookshelf
     public void burnBook(String title) {
-        for (int i = 0; i < getBooks().size(); i++) {
-            Book book = getBooks().get(i);
-            if (book.getTitle().equals(title)) {
-                getBooks().remove(i);
-                break;
-            }
-        }
+        books.remove(title);
         EventLog.getInstance().logEvent(new Event("Removed " + title + " from bookshelf"));
     }
 
     // getters
 
-    // TODO
     // REQUIRES: book is already in bookshelf
     // EFFECTS: returns given book in bookshelf
-//    public Book getBook(String title) {
-//        ArrayList<Book> hereItIs = new ArrayList<>();
-//        for (Book b : books) {
-//            if (Objects.equals(b.getTitle(), title)) {
-//                hereItIs.add(b);
-//            }
-//        }
-//        return hereItIs.get(0);
-//    }
-//
-      // TODO
-//    // EFFECTS: returns list of titles of all the books in the bookshelf
-//    public ArrayList<String> getAllBooks() {
-//        ArrayList<String> allBooks = new ArrayList<>();
-//        for (Book b : books) {
-//            allBooks.add(b.getTitle());
-//        }
-//        return allBooks;
-//    }
-//    // TODO
-//    // EFFECTS: returns a string with the number of books read out of the goal number read
-//    public String getGoalProgress() {
-//        int read = getNumberRead();
-//        int goal = getGoal();
-//        return "You have read " + read + " books out of your goal of " + goal + "!";
-//    }
-//
+    public Book getBook(String title) {
+        return books.get(title);
+    }
+
+    // EFFECTS: returns list of titles of all the books in the bookshelf
+    public Collection<Book> getAllBooks() {
+        return books.values();
+    }
+
+    // EFFECTS: returns iterator for the HashMap of books in this bookshelf
+    public Iterator<Book> getBooksIterator() {
+        return books.values().iterator();
+    }
+
+    // EFFECTS: returns a string with the number of books read out of the goal number read
+    public String getGoalProgress() {
+        int read = getNumberRead();
+        int goal = getGoal();
+        if (read == 1) {
+            return "You have read 1 book out of your goal of " + goal + "!";
+        } else {
+            return "You have read " + read + " books out of your goal of " + goal + "!";
+        }
+    }
+
     // EFFECTS: returns number of books on the bookshelf
     public int getCardinality() {
-        // EventLog.getInstance().logEvent(new Event("Retrieved number of books in bookshelf"));
         return books.size();
     }
-//
-      // TODO
-//    // EFFECTS: returns the number of books of status READ on the bookshelf
-//    public int getNumberRead() {
-//        int count = 0;
-//        for (Book b : books) {
-//            if (b.getStatus() == BookStatus.READ) {
-//                count++;
-//            }
-//        }
-//        return count;
-//    }
-//
+
+    // EFFECTS: returns the number of books of status READ on the bookshelf
+    public int getNumberRead() {
+        int count = 0;
+        Iterator<Book> booksIterator = getBooksIterator();
+        while (booksIterator.hasNext()) {
+            if (booksIterator.next().getStatus() == BookStatus.READ) {
+                count++;
+            }
+        }
+        return count;
+}
 
     // EFFECTS: returns owner's goal for number of books they want to read
     public int getGoal() {
         return this.goal;
     }
-
 
     // EFFECTS: returns a string stating the name of the bookshelf
     public String getName() {
@@ -131,7 +115,7 @@ public class Bookshelf implements Writable {
     }
 
     // EFFECTS: returns the list of books in the bookshelf
-    public DefaultListModel<Book> getBooks() {
+    public HashMap<String, Book> getBooks() {
         return this.books;
     }
 
@@ -148,10 +132,10 @@ public class Bookshelf implements Writable {
     // EFFECTS: return books in this workroom as a JSON array
     private JSONArray booksToJson() {
         JSONArray jsonArray = new JSONArray();
-        
-        for (int i = 0; i < books.size(); i++) {
-            Book b = books.elementAt(i);
-            jsonArray.put(b.toJson());
+
+        Iterator<Book> booksIterator = getBooksIterator();
+        while (booksIterator.hasNext()) {
+            jsonArray.put(booksIterator.next().toJson());
         }
         return jsonArray;
     }
