@@ -18,30 +18,24 @@ public class Book implements Writable {
      *          set status of book to one of READ, CURRENTLYREADING, or TOBEREAD;
      *          set star rating between 1 and 5, 0 if not yet read.
      */
-    public Book(String title, String author, BookStatus status, int rating) {
+    public Book(String title, String author, String status, int rating) {
         this.title = title;
         this.author = author;
-        this.status = status;
+        this.status = convertStatus(status);
         this.rating = rating;
     }
 
-    // setters
-
-    // REQUIRES: status is one of "read", "currently reading", or "to be read"
-    // MODIFIES: this
-    // EFFECTS: sets status as given status
-    public void changeStatus(BookStatus status) {
-        if (this.status != status) {
-            this.status = status;
-        }
-    }
-
-    // REQUIRES: rating is between 1 and 5; 0 if book is not read
-    // MODIFIES: this
-    // EFFECTS: sets rating as given rating
-    public void changeRating(int rating) {
-        if (this.rating != rating) {
-            this.rating = rating;
+    // EFFECTS: converts string to BookStatus
+    private BookStatus convertStatus(String input) {
+        switch (input) {
+            case "r":
+                return BookStatus.READ;
+            case "cr":
+                return BookStatus.CURRENTLYREADING;
+            case "tbr":
+                return BookStatus.TOBEREAD;
+            default:
+                return null;
         }
     }
 

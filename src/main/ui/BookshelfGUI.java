@@ -328,7 +328,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("addBookButton")) {
             String title = fieldTitle.getText();
             String author = fieldAuthor.getText();
-            BookStatus status = convertStatus(statusCB.getSelectedItem().toString());
+            String status = statusCB.getSelectedItem().toString();
             int rating = parseInt(ratingCB.getSelectedItem().toString());
             Book book = new Book(title, author, status, rating);
             bs.shelveBook(book);
@@ -368,19 +368,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // EFFECTS: converts string to BookStatus
-    private BookStatus convertStatus(String input) {
-        switch (input) {
-            case "r":
-                return BookStatus.READ;
-            case "cr":
-                return BookStatus.CURRENTLYREADING;
-            case "tbr":
-                return BookStatus.TOBEREAD;
-            default:
-                return null;
-        }
-    }
 
     public void setUpClosingFunctions() {
         this.addWindowListener(new WindowAdapter() {
