@@ -132,7 +132,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 
     // MODIFIES: frame
     // EFFECTS: constructs labels and fields for adding book functionality, adds them to fame
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"}) // it's only 26 lines!!
     private void setUpAddBook() {
         JLabel labelTitle = new JLabel("Title:");
         add(labelTitle, ctitleLabel);
@@ -324,7 +323,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     // EFFECTS: listens for actions performed and executes methods when detected
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addBookButton")) {
@@ -370,15 +368,18 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // EFFECTS: converts status of book from string to BookStatus
-    private BookStatus convertStatus(String s) {
-        BookStatus stat = BookStatus.TOBEREAD;
-        if (s.equals("read")) {
-            stat = BookStatus.READ;
-        } else if (s.equals("currently reading")) {
-            stat = BookStatus.CURRENTLYREADING;
+    // EFFECTS: converts string to BookStatus
+    private BookStatus convertStatus(String input) {
+        switch (input) {
+            case "r":
+                return BookStatus.READ;
+            case "cr":
+                return BookStatus.CURRENTLYREADING;
+            case "tbr":
+                return BookStatus.TOBEREAD;
+            default:
+                return null;
         }
-        return stat;
     }
 
     public void setUpClosingFunctions() {
@@ -392,9 +393,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     private void printLog() {
-        Iterator<Event> it = EventLog.getInstance().iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next().toString() + "\n");
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.toString() + "\n");
         }
         frame.dispose();
         System.exit(0);
