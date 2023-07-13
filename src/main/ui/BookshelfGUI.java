@@ -51,7 +51,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private GridBagConstraints cwindowTitle = new GridBagConstraints();
     private GridBagConstraints csave = new GridBagConstraints();
     private GridBagConstraints cload = new GridBagConstraints();
-    private GridBagConstraints cdisplayShelf = new GridBagConstraints();
+    private GridBagConstraints cShelfDisplay = new GridBagConstraints();
     private GridBagConstraints clabelCard = new GridBagConstraints();
     private GridBagConstraints cgetCardButton = new GridBagConstraints();
     private GridBagConstraints clabelBurnBook = new GridBagConstraints();
@@ -104,7 +104,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         panel = new JPanel();
         add(panel);
         setUpClosingFunctions();
-        setMinimumSize(new Dimension(700, 500));
+        setMinimumSize(new Dimension(1000, 500));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
         setUpGridBagConstraints();
@@ -213,10 +213,18 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // MODIFIES: frame
     // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, adds them to frame
     private void setUpShelfDisplay() {
-        JButton openShelfDisplayButton = new JButton("View Bookshelf");
-        add(openShelfDisplayButton, cdisplayShelf);
-        openShelfDisplayButton.setActionCommand("viewBookshelf");
-        openShelfDisplayButton.addActionListener(this);
+        DefaultListModel<String> booksInfo = new DefaultListModel<>();
+        Iterator<Book> it = bs.getBooksIterator();
+        while (it.hasNext()) {
+            Book b = it.next();
+            String info = b.getTitle() + " by " + b.getAuthor() + "\n" + b.getStatus() + ", " + b.getRating()
+                    + " stars";
+            booksInfo.addElement(info);
+        }
+        JList list = new JList(booksInfo);
+        JScrollPane scroller = new JScrollPane(list);
+        scroller.setMinimumSize(new Dimension(400, 800));
+        add(scroller, cShelfDisplay);
     }
 
     // EFFECTS: calls methods to set up grid bag constraints for each functionality
@@ -296,32 +304,34 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 
     // EFFECTS: sets constraints for button to view bookshelf
     private void setUpShelfDisplayConstraints() {
-        cdisplayShelf.gridx = 1;
-        cdisplayShelf.gridy = 11;
+        cShelfDisplay.gridx = 4;
+        cShelfDisplay.gridy = 1;
+        cShelfDisplay.gridheight = 10;
+        cShelfDisplay.gridwidth = 2;
     }
 
-    // EFFECTS: opens new scroller with list of books in bookshelf
-    private void openShelfDisplay() {
-        DefaultListModel<String> booksInfo = new DefaultListModel<>();
-        Iterator<Book> it = bs.getBooksIterator();
-        while (it.hasNext()) {
-            Book b = it.next();
-            String info = b.getTitle() + ", " + b.getAuthor() + ", " + b.getStatus() + ", " + b.getRating()
-                    + " stars";
-            booksInfo.addElement(info);
-        }
-        JList list = new JList(booksInfo);
-        JFrame frame1 = new JFrame();
-        JPanel panel1 = new JPanel();
-        JScrollPane scroller = new JScrollPane(list);
-        panel1.add(scroller);
-        frame1.add(panel1);
-        frame1.setPreferredSize(new Dimension(300, 180));
-        frame1.pack();
-        frame1.setLocationRelativeTo(null);
-        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        frame1.setVisible(true);
-    }
+//    // EFFECTS: opens new scroller with list of books in bookshelf
+//    private void openShelfDisplay() {
+//        DefaultListModel<String> booksInfo = new DefaultListModel<>();
+//        Iterator<Book> it = bs.getBooksIterator();
+//        while (it.hasNext()) {
+//            Book b = it.next();
+//            String info = b.getTitle() + " by " + b.getAuthor() + "\n" + b.getStatus() + ", " + b.getRating()
+//                    + " stars";
+//            booksInfo.addElement(info);
+//        }
+//        JList list = new JList(booksInfo);
+//        JFrame frame1 = new JFrame();
+//        JPanel panel1 = new JPanel();
+//        JScrollPane scroller = new JScrollPane(list);
+//        panel1.add(scroller);
+//        frame1.add(panel1);
+//        frame1.setPreferredSize(new Dimension(300, 180));
+//        frame1.pack();
+//        frame1.setLocationRelativeTo(null);
+//        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        frame1.setVisible(true);
+//    }
 
     // can't figure out how to include emoji since it is a character
 //    // EFFECTS: returns a string of star emojis of the given length
@@ -367,9 +377,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 //
             }
         }
-        if (e.getActionCommand().equals("viewBookshelf")) {
-            openShelfDisplay();
-        }
+//        if (e.getActionCommand().equals("viewBookshelf")) {
+//            openShelfDisplay();
+//        }
         if (e.getActionCommand().equals("getCardButton")) {
             labelCard.setText(String.valueOf(bs.getCardinality()));
         }
