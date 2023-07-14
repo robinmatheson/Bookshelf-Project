@@ -27,15 +27,14 @@ public class Book implements Writable {
 
     // EFFECTS: converts string to BookStatus
     private BookStatus convertStatus(String input) {
-        switch (input) {
-            case "r":
-                return BookStatus.READ;
-            case "cr":
-                return BookStatus.CURRENTLYREADING;
-            case "tbr":
-                return BookStatus.TOBEREAD;
-            default:
-                return null;
+        if (input.equals("r") || input.equals("read")) {
+            return BookStatus.READ;
+        } else if (input.equals("cr") || input.equals("currently reading")) {
+            return BookStatus.CURRENTLYREADING;
+        } else if (input.equals("tbr") || input.equals("to be read")) {
+            return BookStatus.TOBEREAD;
+        } else {
+            return null;
         }
     }
 
