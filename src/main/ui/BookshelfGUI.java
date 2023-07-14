@@ -35,6 +35,11 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JLabel labelCard;
     private JTextField fieldBurnBook;
 
+    private DefaultListModel<String> booksInfo = new DefaultListModel<>();
+    private JList<String> jListBooksInfo = new JList<>(booksInfo);
+    private JScrollPane scroller = new JScrollPane(jListBooksInfo);
+
+
     private GridBagConstraints ctitleLabel = new GridBagConstraints();
     private GridBagConstraints ctitleField = new GridBagConstraints();
     private GridBagConstraints cauthorLabel = new GridBagConstraints();
@@ -210,21 +215,10 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, adds them to frame
+    // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf
     private void setUpShelfDisplay() {
-        DefaultListModel<String> booksInfo = new DefaultListModel<>();
-        Iterator<Book> it = bs.getBooksIterator();
-        while (it.hasNext()) {
-            Book b = it.next();
-            String info = b.getTitle() + " by " + b.getAuthor() + "\n" + b.getStatus() + ", " + b.getRating()
-                    + " stars";
-            booksInfo.addElement(info);
-        }
-        JList list = new JList(booksInfo);
-        JScrollPane scroller = new JScrollPane(list);
         scroller.setMinimumSize(new Dimension(500, 900));
         add(scroller, cShelfDisplay);
-        panel.repaint();
     }
 
     // EFFECTS: calls methods to set up grid bag constraints for each functionality
@@ -356,7 +350,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             int rating = parseInt(ratingCB.getSelectedItem().toString());
             Book book = new Book(title, author, status, rating);
             bs.shelveBook(book);
-            setUpShelfDisplay();
+            addBookToBooksInfo(book);
         }
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
@@ -386,12 +380,52 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
+            removeBookFromBooksInfo(bs.getBook(titleToBurn));
             bs.burnBook(titleToBurn);
-            setUpShelfDisplay();
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes info of deleted book from booksInfo
+    private void removeBookFromBooksInfo(Book b) {
+        String val = convertBookToDisplayString(b);
+        int idx = -1;
+        for (int i = 0; i < booksInfo.size(); i++) {
+            String elt = booksInfo.elementAt(i);
+            if (elt.equals(val)) {
+                idx = i;
+                break;
+            }
+        }
+        if (idx != -1) {
+            booksInfo.remove(idx);
+        }
+    }
 
+    // MODIFIES: this
+    // EFFECTS: adds info of added book to booksInfo
+    private void addBookToBooksInfo(Book b) {
+        booksInfo.addElement(convertBookToDisplayString(b));
+    }
+
+    // EFFECTS: converts book info to a string for display on bookshelf
+    private String convertBookToDisplayString(Book b) {
+        return b.getTitle() + " by " + b.getAuthor() + ", " + statusToNiceString(b.getStatus()) + ", " + b.getRating()
+                + " stars";
+    }
+
+    // EFFECTS: converts BookStatus to string to display
+    private String statusToNiceString(BookStatus status) {
+        if (status == BookStatus.READ) {
+            return "read";
+        } else if (status == BookStatus.TOBEREAD) {
+            return "to be read";
+        } else {
+            return "currently reading";
+        }
+    }
+
+    // EFFECTS: calls printLog() function upon window closing
     public void setUpClosingFunctions() {
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -402,6 +436,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         });
     }
 
+    // EFFECTS: prints event log to console
     private void printLog() {
         for (Event event : EventLog.getInstance()) {
             System.out.println(event.toString() + "\n");
