@@ -100,11 +100,10 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: builds and adds frame and components
     private void setUpMainMenu() {
         frame = new JFrame();
-        frame.setTitle(bs.getName());
         panel = new JPanel();
         add(panel);
         setUpClosingFunctions();
-        setMinimumSize(new Dimension(1000, 500));
+        setMinimumSize(new Dimension(1100, 500));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
         setUpGridBagConstraints();
@@ -223,8 +222,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
         JList list = new JList(booksInfo);
         JScrollPane scroller = new JScrollPane(list);
-        scroller.setMinimumSize(new Dimension(400, 800));
+        scroller.setMinimumSize(new Dimension(500, 900));
         add(scroller, cShelfDisplay);
+        panel.repaint();
     }
 
     // EFFECTS: calls methods to set up grid bag constraints for each functionality
@@ -256,10 +256,13 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 
     // EFFECTS: sets constraints for icon and bookshelf name
     private void setUpIconConstraints() {
-        cicon.gridx = 0;
+        cicon.gridx = 3;
         cicon.gridy = 0;
-        cwindowTitle.gridx = 1;
+        cwindowTitle.gridx = 0;
         cwindowTitle.gridy = 0;
+        cwindowTitle.gridwidth = 2;
+        cwindowTitle.gridheight = 1;
+        // none of these are moving to their new spots
     }
 
     // EFFECTS: sets constraints for adding book to bookshelf
@@ -353,6 +356,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             int rating = parseInt(ratingCB.getSelectedItem().toString());
             Book book = new Book(title, author, status, rating);
             bs.shelveBook(book);
+            setUpShelfDisplay();
         }
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
@@ -377,15 +381,13 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 //
             }
         }
-//        if (e.getActionCommand().equals("viewBookshelf")) {
-//            openShelfDisplay();
-//        }
         if (e.getActionCommand().equals("getCardButton")) {
             labelCard.setText(String.valueOf(bs.getCardinality()));
         }
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
             bs.burnBook(titleToBurn);
+            setUpShelfDisplay();
         }
     }
 
