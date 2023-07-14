@@ -217,7 +217,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // MODIFIES: frame
     // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf
     private void setUpShelfDisplay() {
-        scroller.setMinimumSize(new Dimension(500, 900));
+        scroller.setMinimumSize(new Dimension(600, 1000));
         add(scroller, cShelfDisplay);
     }
 
@@ -303,32 +303,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private void setUpShelfDisplayConstraints() {
         cShelfDisplay.gridx = 4;
         cShelfDisplay.gridy = 1;
-        cShelfDisplay.gridheight = 10;
-        cShelfDisplay.gridwidth = 2;
+        cShelfDisplay.gridheight = 20;
+        cShelfDisplay.gridwidth = 3;
     }
-
-//    // EFFECTS: opens new scroller with list of books in bookshelf
-//    private void openShelfDisplay() {
-//        DefaultListModel<String> booksInfo = new DefaultListModel<>();
-//        Iterator<Book> it = bs.getBooksIterator();
-//        while (it.hasNext()) {
-//            Book b = it.next();
-//            String info = b.getTitle() + " by " + b.getAuthor() + "\n" + b.getStatus() + ", " + b.getRating()
-//                    + " stars";
-//            booksInfo.addElement(info);
-//        }
-//        JList list = new JList(booksInfo);
-//        JFrame frame1 = new JFrame();
-//        JPanel panel1 = new JPanel();
-//        JScrollPane scroller = new JScrollPane(list);
-//        panel1.add(scroller);
-//        frame1.add(panel1);
-//        frame1.setPreferredSize(new Dimension(300, 180));
-//        frame1.pack();
-//        frame1.setLocationRelativeTo(null);
-//        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        frame1.setVisible(true);
-//    }
 
     // can't figure out how to include emoji since it is a character
 //    // EFFECTS: returns a string of star emojis of the given length
