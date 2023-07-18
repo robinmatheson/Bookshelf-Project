@@ -31,8 +31,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JTextField fieldAuthor;
     private JComboBox<String> statusCB;
     private JComboBox<String> ratingCB;
-    private JTextField fieldChangeName;
     private JTextField fieldBurnBook;
+    private JTextField fieldSetGoal;
+    private JTextField fieldChangeName;
 
     private DefaultListModel<String> booksInfo = new DefaultListModel<>();
     private JList<String> jListBooksInfo = new JList<>(booksInfo);
@@ -69,8 +70,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpMainMenu();
         setUpIcon();
         setUpAddBook();
-        setUpReadingGoal();
         setUpBurnBook();
+        setUpReadingGoal();
         setUpChangeBookshelfName();
         setUpPersistence();
         setUpShelfDisplay();
@@ -168,13 +169,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: frame
-    // EFFECTS: constructs label and button associated with creating and displaying a reading goal, sets constraints
-    //          and adds to frame
-    private void setUpReadingGoal() {
-        // TODO
-    }
-
-    // MODIFIES: frame
     // EFFECTS: constructs labels and field to remove a book from the bookshelf, sets constraints and adds to panel
     private void setUpBurnBook() {
         JLabel labelBurnBook = new JLabel("Enter title of the book you want to remove:");
@@ -191,6 +185,27 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         add(burnBookButton, c);
         burnBookButton.setActionCommand("burnBookButton");
         burnBookButton.addActionListener(this);
+    }
+
+    // MODIFIES: frame
+    // EFFECTS: constructs label and button associated with creating and displaying a reading goal, sets constraints
+    //          and adds to frame
+    private void setUpReadingGoal() {
+        // TODO
+        JLabel labelSetGoal = new JLabel("Enter a new reading goal:");
+        c.gridx = 0;
+        c.gridy = 7;
+        add(labelSetGoal, c);
+        fieldSetGoal = new JTextField(8);
+        c.gridx = 1;
+        c.gridy = 7;
+        add(fieldSetGoal, c);
+        JButton setGoalButton = new JButton("Set Goal");
+        c.gridx = 2;
+        c.gridy = 7;
+        add(setGoalButton, c);
+        setGoalButton.setActionCommand("setGoalButton");
+        setGoalButton.addActionListener(this);
     }
 
     // MODIFIES: frame
@@ -254,6 +269,14 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             bs.shelveBook(book);
             addBookToBooksInfo(book);
         }
+        if (e.getActionCommand().equals("burnBookButton")) {
+            String titleToBurn = fieldBurnBook.getText();
+            removeBookFromBooksInfo(bs.getBook(titleToBurn));
+            bs.burnBook(titleToBurn);
+        }
+        if (e.getActionCommand().equals("setGoalButton")) {
+            bs.setGoal(parseInt(fieldSetGoal.getText()));
+        }
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
             bookshelfTitle.setText(fieldChangeName.getText());
@@ -276,11 +299,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             } catch (IOException exc) {
                 //
             }
-        }
-        if (e.getActionCommand().equals("burnBookButton")) {
-            String titleToBurn = fieldBurnBook.getText();
-            removeBookFromBooksInfo(bs.getBook(titleToBurn));
-            bs.burnBook(titleToBurn);
         }
     }
 
