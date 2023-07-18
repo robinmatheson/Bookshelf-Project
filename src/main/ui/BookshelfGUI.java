@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
@@ -324,9 +325,20 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 jsonReader = new JsonReader(JSON_STORE);
                 bs = jsonReader.read();
                 bookshelfTitle.setText(bs.getName());
+                loadedShelfAddBooks();
+                updateCardinality();
+                updateReadingGoal();
             } catch (IOException exc) {
                 //
             }
+        }
+    }
+
+    private void loadedShelfAddBooks() {
+        booksInfo.clear();
+        Collection<Book> books = bs.getAllBooks();
+        for (Book b : books) {
+            addBookToBooksInfo(b);
         }
     }
 
