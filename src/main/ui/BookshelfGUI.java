@@ -10,12 +10,14 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Vector;
 
 import static java.lang.Integer.parseInt;
 import static javax.swing.JOptionPane.showInputDialog;
@@ -38,9 +40,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JTextField fieldSetGoal;
     private JTextField fieldChangeName;
 
-    private DefaultListModel<String> booksInfo = new DefaultListModel<>();
-    private JList<String> jListBooksInfo = new JList<>(booksInfo);
-    private JScrollPane scroller = new JScrollPane(jListBooksInfo);
+    private DefaultTableModel dtmBooks;
 
     private GridBagConstraints c = new GridBagConstraints();
 
@@ -91,7 +91,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         panel = new JPanel();
         add(panel);
         setUpClosingFunctions();
-        setMinimumSize(new Dimension(1100, 500));
+        setMinimumSize(new Dimension(1200, 600));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
     }
@@ -211,8 +211,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setGoalButton.addActionListener(this);
         // display
         labelDisplayGoal = new JLabel("");
-        c.gridx = 5;
-        c.gridy = 9;
+        c.gridx = 4;
+        c.gridy = 11;
         add(labelDisplayGoal, c);
         updateReadingGoal();
     }
@@ -258,11 +258,19 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, sets constraints and adds
     //          to frame
     private void setUpShelfDisplay() {
+        // TODO
+        Vector<String> colNames = new Vector<>();
+        colNames.add("Title");
+        colNames.add("Author");
+        colNames.add("Status");
+        colNames.add("Rating");
+        dtmBooks = new DefaultTableModel(colNames, 1);
+        JScrollPane scroller = new JScrollPane(new JTable(dtmBooks));
+        //scroller.setMinimumSize(new Dimension(300, 300));
         c.gridx = 3;
         c.gridy = 1;
-        c.gridheight = 20;
         c.gridwidth = 3;
-        scroller.setMinimumSize(new Dimension(600, 1000));
+        c.gridheight = 9;
         add(scroller, c);
     }
 
@@ -270,8 +278,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs label for the number of books shelved, sets constraints and adds to frame
     public void setUpCardinality() {
         labelDisplayCard = new JLabel("");
-        c.gridx = 5;
-        c.gridy = 10;
+        c.gridx = 3;
+        c.gridy = 12;
         add(labelDisplayCard, c);
         updateCardinality();
     }
@@ -335,11 +343,12 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     private void loadedShelfAddBooks() {
-        booksInfo.clear();
-        Collection<Book> books = bs.getAllBooks();
-        for (Book b : books) {
-            addBookToBooksInfo(b);
-        }
+        // TODO
+//        booksInfo.clear();
+//        Collection<Book> books = bs.getAllBooks();
+//        for (Book b : books) {
+//            addBookToBooksInfo(b);
+//        }
     }
 
     private void updateCardinality() {
@@ -361,29 +370,32 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
+    // TODO
     // MODIFIES: this
     // EFFECTS: removes info of deleted book from booksInfo
     private void removeBookFromBooksInfo(Book b) {
-        String val = convertBookToDisplayString(b);
-        int idx = -1;
-        for (int i = 0; i < booksInfo.size(); i++) {
-            String elt = booksInfo.elementAt(i);
-            if (elt.equals(val)) {
-                idx = i;
-                break;
-            }
-        }
-        if (idx != -1) {
-            booksInfo.remove(idx);
-        }
+//        String val = convertBookToDisplayString(b);
+//        int idx = -1;
+//        for (int i = 0; i < booksInfo.size(); i++) {
+//            String elt = booksInfo.elementAt(i);
+//            if (elt.equals(val)) {
+//                idx = i;
+//                break;
+//            }
+//        }
+//        if (idx != -1) {
+//            booksInfo.remove(idx);
+//        }
     }
 
+    // TODO
     // MODIFIES: this
     // EFFECTS: adds info of added book to booksInfo
     private void addBookToBooksInfo(Book b) {
-        booksInfo.addElement(convertBookToDisplayString(b));
+        //booksInfo.addElement(convertBookToDisplayString(b));
     }
 
+    // TODO
     // EFFECTS: converts book info to a string for display on bookshelf
     private String convertBookToDisplayString(Book b) {
         return b.getTitle() + " by " + b.getAuthor() + ", " + statusToNiceString(b.getStatus()) + ", " + b.getRating()
