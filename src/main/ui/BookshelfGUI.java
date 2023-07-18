@@ -26,6 +26,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JFrame frame;
 
     private JLabel bookshelfTitle;
+    private JLabel labelDisplayGoal;
 
     private JTextField fieldTitle;
     private JTextField fieldAuthor;
@@ -206,6 +207,12 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         add(setGoalButton, c);
         setGoalButton.setActionCommand("setGoalButton");
         setGoalButton.addActionListener(this);
+        // display
+        labelDisplayGoal = new JLabel("");
+        c.gridx = 5;
+        c.gridy = 9;
+        add(labelDisplayGoal, c);
+        updateReadingGoal();
     }
 
     // MODIFIES: frame
@@ -268,14 +275,21 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             Book book = new Book(title, author, status, rating);
             bs.shelveBook(book);
             addBookToBooksInfo(book);
+            if (status.equals("read")) {
+                updateReadingGoal();
+            }
         }
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
             removeBookFromBooksInfo(bs.getBook(titleToBurn));
+            if (bs.getBook(titleToBurn).getStatus() == BookStatus.READ) {
+                updateReadingGoal();
+            }
             bs.burnBook(titleToBurn);
         }
         if (e.getActionCommand().equals("setGoalButton")) {
             bs.setGoal(parseInt(fieldSetGoal.getText()));
+            updateReadingGoal();
         }
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
@@ -298,6 +312,21 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 bookshelfTitle.setText(bs.getName());
             } catch (IOException exc) {
                 //
+            }
+        }
+    }
+
+    private void updateReadingGoal() {
+        if (bs.getGoal() == -1) {
+            labelDisplayGoal.setText("No reading goal set.");
+        } else {
+            int num = bs.getNumberRead();
+            if (num == 1) {
+                labelDisplayGoal.setText("You have read " + num + " book out of your goal of " + bs.getGoal()
+                        + "!");
+            } else {
+                labelDisplayGoal.setText("You have read " + num + " books out of your goal of " + bs.getGoal()
+                        + "!");
             }
         }
     }

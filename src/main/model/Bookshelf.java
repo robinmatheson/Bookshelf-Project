@@ -17,9 +17,10 @@ public class Bookshelf implements Writable {
     private int goal;
 
     // EFFECTS: constructs a bookshelf with given name and owner's name
+    //          sets goal to -1 to signify no reading goal made
     public Bookshelf(String name) {
         this.name = name;
-        this.goal = 0;
+        this.goal = -1;
         this.books = new HashMap<>();
         EventLog.getInstance().logEvent(new Event("Made bookshelf called " + getName()));
     }
