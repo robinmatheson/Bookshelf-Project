@@ -15,6 +15,7 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
 import static javax.swing.JOptionPane.showInputDialog;
@@ -75,10 +76,11 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         initializeGUI();
     }
 
-    // EFFECTS: opens pop-up window and constructs bookshelf
+    // EFFECTS: opens pop-up window and constructs bookshelf; if no input or cancel button pressed, sets name of
+    //          bookshelf to default "My Bookshelf"
     private void initializeGUI() {
         String inputName = showInputDialog("Please enter the name of your bookshelf:");
-        if (inputName == null) {
+        if (Objects.equals(inputName, "") || inputName == null) {
             bs = new Bookshelf("My Bookshelf");
         } else {
             bs = new Bookshelf(inputName);
@@ -256,7 +258,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         cwindowTitle.gridy = 0;
         cwindowTitle.gridwidth = 2;
         cwindowTitle.gridheight = 1;
-        // none of these are moving to their new spots
+        // TODO: none of these are moving to their new spots
     }
 
     // EFFECTS: sets constraints for adding book to bookshelf
