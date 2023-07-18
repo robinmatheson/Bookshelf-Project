@@ -94,7 +94,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpAddBook();
         setUpReadingGoal();
         setUpBurnBook();
-        setUpGetCardinality();
+        // setUpGetCardinality();
         setUpChangeBookshelfName();
         setUpPersistence();
         setUpShelfDisplay();
@@ -171,16 +171,16 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs label and button for displaying cardinality of bookshelf
-    private void setUpGetCardinality() {
-        labelCard = new JLabel("");
-        add(labelCard, clabelCard);
-        JButton getCardButton = new JButton("Get Cardinality");
-        add(getCardButton, cgetCardButton);
-        getCardButton.setActionCommand("getCardButton");
-        getCardButton.addActionListener(this);
-    }
+//    // MODIFIES: frame
+//    // EFFECTS: constructs label and button for displaying cardinality of bookshelf
+//    private void setUpGetCardinality() {
+//        labelCard = new JLabel("");
+//        add(labelCard, clabelCard);
+//        JButton getCardButton = new JButton("Get Cardinality");
+//        add(getCardButton, cgetCardButton);
+//        getCardButton.setActionCommand("getCardButton");
+//        getCardButton.addActionListener(this);
+//    }
 
     // MODIFIES: frame
     // EFFECTS: constructs labels and field to remove a book from the bookshelf
@@ -199,7 +199,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // MODIFIES: frame
     // EFFECTS: constructs labels and fields for changing the name of the bookshelf, adds them to frame
     private void setUpChangeBookshelfName() {
-        JLabel labelChangeName = new JLabel("Enter new bookshelf name:");
+        JLabel labelChangeName = new JLabel("Enter a new name for your bookshelf:");
         add(labelChangeName, cchangeNameLabel);
         fieldChangeName = new JTextField(15);
         add(fieldChangeName, cchangeNameField);
@@ -237,7 +237,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpPersistenceConstraints();
         setUpShelfDisplayConstraints();
         setUpBurnBookConstraints();
-        setUpGetCardinalityConstraints();
+        //setUpGetCardinalityConstraints();
         setUpReadingGoalConstraints();
     }
 
@@ -250,12 +250,17 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         // none of these are moving to their new spots
     }
 
-    private void setUpGetCardinalityConstraints() {
-        clabelCard.gridx = 2;
-        clabelCard.gridy = 7;
-        cgetCardButton.gridx = 1;
-        cgetCardButton.gridy = 7;
+    // EFFECTS: sets constraints for reading goal
+    private void setUpReadingGoalConstraints() {
+
     }
+
+//    private void setUpGetCardinalityConstraints() {
+//        clabelCard.gridx = 2;
+//        clabelCard.gridy = 7;
+//        cgetCardButton.gridx = 1;
+//        cgetCardButton.gridy = 7;
+//    }
 
     private void setUpBurnBookConstraints() {
         clabelBurnBook.gridx = 0;
@@ -314,9 +319,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         cShelfDisplay.gridwidth = 3;
     }
 
-    private void setUpReadingGoalConstraints() {
-
-    }
 
     // can't figure out how to include emoji since it is a character
 //    // EFFECTS: returns a string of star emojis of the given length
