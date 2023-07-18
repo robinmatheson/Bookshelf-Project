@@ -32,36 +32,13 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JComboBox<String> statusCB;
     private JComboBox<String> ratingCB;
     private JTextField fieldChangeName;
-    private JLabel labelCard;
     private JTextField fieldBurnBook;
 
     private DefaultListModel<String> booksInfo = new DefaultListModel<>();
     private JList<String> jListBooksInfo = new JList<>(booksInfo);
     private JScrollPane scroller = new JScrollPane(jListBooksInfo);
 
-
-    private GridBagConstraints ctitleLabel = new GridBagConstraints();
-    private GridBagConstraints ctitleField = new GridBagConstraints();
-    private GridBagConstraints cauthorLabel = new GridBagConstraints();
-    private GridBagConstraints cauthorField = new GridBagConstraints();
-    private GridBagConstraints cstatusLabel = new GridBagConstraints();
-    private GridBagConstraints cstatusCB = new GridBagConstraints();
-    private GridBagConstraints cratingLabel = new GridBagConstraints();
-    private GridBagConstraints cratingCB = new GridBagConstraints();
-    private GridBagConstraints caddBook = new GridBagConstraints();
-    private GridBagConstraints cicon = new GridBagConstraints();
-    private GridBagConstraints cchangeNameLabel = new GridBagConstraints();
-    private GridBagConstraints cchangeNameField = new GridBagConstraints();
-    private GridBagConstraints cchangeNameButton = new GridBagConstraints();
-    private GridBagConstraints cwindowTitle = new GridBagConstraints();
-    private GridBagConstraints csave = new GridBagConstraints();
-    private GridBagConstraints cload = new GridBagConstraints();
-    private GridBagConstraints cShelfDisplay = new GridBagConstraints();
-    private GridBagConstraints clabelCard = new GridBagConstraints();
-    private GridBagConstraints cgetCardButton = new GridBagConstraints();
-    private GridBagConstraints clabelBurnBook = new GridBagConstraints();
-    private GridBagConstraints cfieldBurnBook = new GridBagConstraints();
-    private GridBagConstraints cburnBookButton = new GridBagConstraints();
+    private GridBagConstraints c = new GridBagConstraints();
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -94,7 +71,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpAddBook();
         setUpReadingGoal();
         setUpBurnBook();
-        // setUpGetCardinality();
         setUpChangeBookshelfName();
         setUpPersistence();
         setUpShelfDisplay();
@@ -113,7 +89,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setMinimumSize(new Dimension(1100, 500));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
-        setUpGridBagConstraints();
     }
 
     // MODIFIES: frame
@@ -124,211 +99,148 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         Image img = imageIcon.getImage();
         Image newImage = img.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         JLabel mmIcon = new JLabel(new ImageIcon(newImage));
-        panel.add(mmIcon, cicon);
+        c.gridx = 0;
+        c.gridy = 0;
+        panel.add(mmIcon, c);
         addNameTitle();
     }
 
     // MODIFIES: frame
-    // EFFECTS: adds bookshelf name as JLabel at top of window
+    // EFFECTS: adds bookshelf name as JLabel at top left of window
     private void addNameTitle() {
         bookshelfTitle = new JLabel(bs.getName());
         bookshelfTitle.setFont(new Font("SansSerif", Font.BOLD, 25));
-        panel.add(bookshelfTitle, cwindowTitle);
+        c.gridx = 2;
+        c.gridy = 0;
+        panel.add(bookshelfTitle, c);
     }
 
     // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for adding book functionality, adds them to fame
+    // EFFECTS: constructs labels and fields for adding book functionality, sets constrains and adds to fame
     private void setUpAddBook() {
+        // title
         JLabel labelTitle = new JLabel("Title:");
-        add(labelTitle, ctitleLabel);
+        c.gridx = 0;
+        c.gridy = 1;
+        add(labelTitle, c);
         fieldTitle = new JTextField(15);
-        add(fieldTitle, ctitleField);
+        c.gridx = 1;
+        c.gridy = 1;
+        add(fieldTitle, c);
+        // author
         JLabel labelAuthor = new JLabel("Author:");
-        add(labelAuthor, cauthorLabel);
+        c.gridx = 0;
+        c.gridy = 2;
+        add(labelAuthor, c);
         fieldAuthor = new JTextField(15);
-        add(fieldAuthor, cauthorField);
+        c.gridx = 1;
+        c.gridy = 2;
+        add(fieldAuthor, c);
+        // status
         JLabel labelStatus = new JLabel("Reading Status:");
-        add(labelStatus, cstatusLabel);
+        c.gridx = 0;
+        c.gridy = 3;
+        add(labelStatus, c);
         String[] statusChoices = new String[]{"to be read", "currently reading", "read"};
         statusCB = new JComboBox<>(statusChoices);
         statusCB.setSelectedItem("to be read");
-        add(statusCB, cstatusCB);
+        c.gridx = 1;
+        c.gridy = 3;
+        add(statusCB, c);
+        // rating
         JLabel labelRating = new JLabel("Rating:");
-        add(labelRating, cratingLabel);
+        c.gridx = 0;
+        c.gridy = 4;
+        add(labelRating, c);
         String[] ratingChoices = new String[]{"0", "1", "2", "3", "4", "5"};
         ratingCB = new JComboBox<>(ratingChoices);
         ratingCB.setSelectedItem("0");
-        add(ratingCB, cratingCB);
+        c.gridx = 1;
+        c.gridy = 4;
+        add(ratingCB, c);
+        // button
         JButton addBookButton = new JButton("Add Book");
         addBookButton.setActionCommand("addBookButton");
         addBookButton.addActionListener(this);
-        add(addBookButton, caddBook);
+        c.gridx = 1;
+        c.gridy = 5;
+        add(addBookButton, c);
     }
 
     // MODIFIES: frame
-    // EFFECTS: constructs label and button associated with creating and displaying a reading goal
+    // EFFECTS: constructs label and button associated with creating and displaying a reading goal, sets constraints
+    //          and adds to frame
     private void setUpReadingGoal() {
-
+        // TODO
     }
 
-//    // MODIFIES: frame
-//    // EFFECTS: constructs label and button for displaying cardinality of bookshelf
-//    private void setUpGetCardinality() {
-//        labelCard = new JLabel("");
-//        add(labelCard, clabelCard);
-//        JButton getCardButton = new JButton("Get Cardinality");
-//        add(getCardButton, cgetCardButton);
-//        getCardButton.setActionCommand("getCardButton");
-//        getCardButton.addActionListener(this);
-//    }
-
     // MODIFIES: frame
-    // EFFECTS: constructs labels and field to remove a book from the bookshelf
+    // EFFECTS: constructs labels and field to remove a book from the bookshelf, sets constraints and adds to panel
     private void setUpBurnBook() {
         JLabel labelBurnBook = new JLabel("Enter title of the book you want to remove:");
-        add(labelBurnBook, clabelBurnBook);
+        c.gridx = 0;
+        c.gridy = 6;
+        add(labelBurnBook, c);
         fieldBurnBook = new JTextField(15);
-        add(fieldBurnBook, cfieldBurnBook);
+        c.gridx = 1;
+        c.gridy = 6;
+        add(fieldBurnBook, c);
         JButton burnBookButton = new JButton("Burn Book");
-        add(burnBookButton, cburnBookButton);
+        c.gridx = 2;
+        c.gridy = 6;
+        add(burnBookButton, c);
         burnBookButton.setActionCommand("burnBookButton");
         burnBookButton.addActionListener(this);
     }
 
-
     // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for changing the name of the bookshelf, adds them to frame
+    // EFFECTS: constructs labels and fields for changing the name of the bookshelf, sets constraints and
+    //          adds them to frame
     private void setUpChangeBookshelfName() {
         JLabel labelChangeName = new JLabel("Enter a new name for your bookshelf:");
-        add(labelChangeName, cchangeNameLabel);
+        c.gridx = 0;
+        c.gridy = 8;
+        add(labelChangeName, c);
         fieldChangeName = new JTextField(15);
-        add(fieldChangeName, cchangeNameField);
+        c.gridx = 1;
+        c.gridy = 8;
+        add(fieldChangeName, c);
         JButton changeNameButton = new JButton("Enter");
-        add(changeNameButton, cchangeNameButton);
+        c.gridx = 2;
+        c.gridy = 8;
+        add(changeNameButton, c);
         changeNameButton.setActionCommand("changeNameButton");
         changeNameButton.addActionListener(this);
     }
 
     // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for persistence, adds them to frame
+    // EFFECTS: constructs labels and fields for persistence, sets constraints and adds them to frame
     private void setUpPersistence() {
         JButton saveBookshelfButton = new JButton("Save Bookshelf");
-        add(saveBookshelfButton, csave);
+        c.gridx = 1;
+        c.gridy = 9;
+        add(saveBookshelfButton, c);
         saveBookshelfButton.setActionCommand("saveBookshelf");
         saveBookshelfButton.addActionListener(this);
         JButton loadBookshelfButton = new JButton("Load Bookshelf");
-        add(loadBookshelfButton, cload);
+        c.gridx = 1;
+        c.gridy = 10;
+        add(loadBookshelfButton, c);
         loadBookshelfButton.setActionCommand("loadBookshelf");
         loadBookshelfButton.addActionListener(this);
     }
 
     // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf
+    // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, sets constraints and adds
+    //          to frame
     private void setUpShelfDisplay() {
+        c.gridx = 4;
+        c.gridy = 1;
+        c.gridheight = 20;
+        c.gridwidth = 3;
         scroller.setMinimumSize(new Dimension(600, 1000));
-        add(scroller, cShelfDisplay);
+        add(scroller, c);
     }
-
-    // EFFECTS: calls methods to set up grid bag constraints for each functionality
-    private void setUpGridBagConstraints() {
-        setUpIconConstraints();
-        setUpAddBookConstraints();
-        setUpChangeBookshelfNameConstraints();
-        setUpPersistenceConstraints();
-        setUpShelfDisplayConstraints();
-        setUpBurnBookConstraints();
-        //setUpGetCardinalityConstraints();
-        setUpReadingGoalConstraints();
-    }
-
-    // EFFECTS: sets constraints for icon and bookshelf name
-    private void setUpIconConstraints() {
-        cicon.gridx = 0;
-        cicon.gridy = 0;
-        cwindowTitle.gridx = 4;
-        cwindowTitle.gridy = 0;
-        // none of these are moving to their new spots
-    }
-
-    // EFFECTS: sets constraints for reading goal
-    private void setUpReadingGoalConstraints() {
-
-    }
-
-//    private void setUpGetCardinalityConstraints() {
-//        clabelCard.gridx = 2;
-//        clabelCard.gridy = 7;
-//        cgetCardButton.gridx = 1;
-//        cgetCardButton.gridy = 7;
-//    }
-
-    private void setUpBurnBookConstraints() {
-        clabelBurnBook.gridx = 0;
-        clabelBurnBook.gridy = 6;
-        cfieldBurnBook.gridx = 1;
-        cfieldBurnBook.gridy = 6;
-        cburnBookButton.gridx = 2;
-        cburnBookButton.gridy = 6;
-    }
-
-    // EFFECTS: sets constraints for adding book to bookshelf
-    private void setUpAddBookConstraints() {
-        ctitleLabel.gridx = 0;
-        ctitleLabel.gridy = 1;
-        ctitleField.gridx = 1;
-        ctitleField.gridy = 1;
-        cauthorLabel.gridx = 0;
-        cauthorLabel.gridy = 2;
-        cauthorField.gridx = 1;
-        cauthorField.gridy = 2;
-        cstatusLabel.gridx = 0;
-        cstatusLabel.gridy = 3;
-        cstatusCB.gridx = 1;
-        cstatusCB.gridy = 3;
-        cratingLabel.gridx = 0;
-        cratingLabel.gridy = 4;
-        cratingCB.gridx = 1;
-        cratingCB.gridy = 4;
-        caddBook.gridx = 1;
-        caddBook.gridy = 5;
-    }
-
-    // EFFECTS: sets constraints for changing the name of the bookshelf
-    private void setUpChangeBookshelfNameConstraints() {
-        cchangeNameLabel.gridx = 0;
-        cchangeNameLabel.gridy = 8;
-        cchangeNameField.gridx = 1;
-        cchangeNameField.gridy = 8;
-        cchangeNameButton.gridx = 2;
-        cchangeNameButton.gridy = 8;
-    }
-
-    // EFFECTS: sets constraints for persistence functionality
-    private void setUpPersistenceConstraints() {
-        csave.gridx = 1;
-        csave.gridy = 9;
-        cload.gridx = 1;
-        cload.gridy = 10;
-    }
-
-    // EFFECTS: sets constraints for button to view bookshelf
-    private void setUpShelfDisplayConstraints() {
-        cShelfDisplay.gridx = 4;
-        cShelfDisplay.gridy = 1;
-        cShelfDisplay.gridheight = 20;
-        cShelfDisplay.gridwidth = 3;
-    }
-
-
-    // can't figure out how to include emoji since it is a character
-//    // EFFECTS: returns a string of star emojis of the given length
-//    private String getStarEmojis(int num) {
-//        String str = "";
-//        for (int i = 0; i < num; i++) {
-//            str += new String(Character.toChars(&#x2B50));
-//        }
-//        return str;
-//    }
 
     // EFFECTS: listens for actions performed and executes methods when detected
     @Override
@@ -364,9 +276,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             } catch (IOException exc) {
                 //
             }
-        }
-        if (e.getActionCommand().equals("getCardButton")) {
-            labelCard.setText(String.valueOf(bs.getCardinality()));
         }
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
