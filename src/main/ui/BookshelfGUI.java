@@ -27,6 +27,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 
     private JLabel bookshelfTitle;
     private JLabel labelDisplayGoal;
+    private JLabel labelDisplayCard;
 
     private JTextField fieldTitle;
     private JTextField fieldAuthor;
@@ -76,6 +77,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpChangeBookshelfName();
         setUpPersistence();
         setUpShelfDisplay();
+        setUpCardinality();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
@@ -192,7 +194,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs label and button associated with creating and displaying a reading goal, sets constraints
     //          and adds to frame
     private void setUpReadingGoal() {
-        // TODO
         JLabel labelSetGoal = new JLabel("Enter a new reading goal:");
         c.gridx = 0;
         c.gridy = 7;
@@ -256,12 +257,22 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, sets constraints and adds
     //          to frame
     private void setUpShelfDisplay() {
-        c.gridx = 4;
+        c.gridx = 3;
         c.gridy = 1;
         c.gridheight = 20;
         c.gridwidth = 3;
         scroller.setMinimumSize(new Dimension(600, 1000));
         add(scroller, c);
+    }
+
+    // MODIFIES: frame
+    // EFFECTS: constructs label for the number of books shelved, sets constraints and adds to frame
+    public void setUpCardinality() {
+        labelDisplayCard = new JLabel("");
+        c.gridx = 5;
+        c.gridy = 10;
+        add(labelDisplayCard, c);
+        updateCardinality();
     }
 
     // EFFECTS: listens for actions performed and executes methods when detected
@@ -278,6 +289,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             if (status.equals("read")) {
                 updateReadingGoal();
             }
+            updateCardinality();
         }
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
@@ -286,6 +298,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 updateReadingGoal();
             }
             bs.burnBook(titleToBurn);
+            updateReadingGoal();
+            updateCardinality();
         }
         if (e.getActionCommand().equals("setGoalButton")) {
             bs.setGoal(parseInt(fieldSetGoal.getText()));
@@ -314,6 +328,10 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 //
             }
         }
+    }
+
+    private void updateCardinality() {
+        labelDisplayCard.setText("Number of books shelved: " + bs.getCardinality());
     }
 
     private void updateReadingGoal() {
