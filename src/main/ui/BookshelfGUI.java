@@ -14,7 +14,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
@@ -26,7 +25,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JPanel panel;
     private JFrame frame;
 
-    private JLabel windowTitle;
+    private JLabel bookshelfTitle;
 
     private JTextField fieldTitle;
     private JTextField fieldAuthor;
@@ -93,6 +92,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpMainMenu();
         setUpIcon();
         setUpAddBook();
+        setUpReadingGoal();
         setUpBurnBook();
         setUpGetCardinality();
         setUpChangeBookshelfName();
@@ -123,8 +123,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 getClass().getResource("/resources/img.png"));
         Image img = imageIcon.getImage();
         Image newImage = img.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-        ImageIcon image = new ImageIcon(newImage);
-        JLabel mmIcon = new JLabel(image);
+        JLabel mmIcon = new JLabel(new ImageIcon(newImage));
         panel.add(mmIcon, cicon);
         addNameTitle();
     }
@@ -132,8 +131,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // MODIFIES: frame
     // EFFECTS: adds bookshelf name as JLabel at top of window
     private void addNameTitle() {
-        windowTitle = new JLabel(bs.getName());
-        panel.add(windowTitle, cwindowTitle);
+        bookshelfTitle = new JLabel(bs.getName());
+        bookshelfTitle.setFont(new Font("SansSerif", Font.BOLD, 25));
+        panel.add(bookshelfTitle, cwindowTitle);
     }
 
     // MODIFIES: frame
@@ -163,6 +163,12 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         addBookButton.setActionCommand("addBookButton");
         addBookButton.addActionListener(this);
         add(addBookButton, caddBook);
+    }
+
+    // MODIFIES: frame
+    // EFFECTS: constructs label and button associated with creating and displaying a reading goal
+    private void setUpReadingGoal() {
+
     }
 
     // MODIFIES: frame
@@ -232,6 +238,16 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setUpShelfDisplayConstraints();
         setUpBurnBookConstraints();
         setUpGetCardinalityConstraints();
+        setUpReadingGoalConstraints();
+    }
+
+    // EFFECTS: sets constraints for icon and bookshelf name
+    private void setUpIconConstraints() {
+        cicon.gridx = 0;
+        cicon.gridy = 0;
+        cwindowTitle.gridx = 4;
+        cwindowTitle.gridy = 0;
+        // none of these are moving to their new spots
     }
 
     private void setUpGetCardinalityConstraints() {
@@ -248,17 +264,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         cfieldBurnBook.gridy = 6;
         cburnBookButton.gridx = 2;
         cburnBookButton.gridy = 6;
-    }
-
-    // EFFECTS: sets constraints for icon and bookshelf name
-    private void setUpIconConstraints() {
-        cicon.gridx = 3;
-        cicon.gridy = 0;
-        cwindowTitle.gridx = 0;
-        cwindowTitle.gridy = 0;
-        cwindowTitle.gridwidth = 2;
-        cwindowTitle.gridheight = 1;
-        // TODO: none of these are moving to their new spots
     }
 
     // EFFECTS: sets constraints for adding book to bookshelf
@@ -309,6 +314,10 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         cShelfDisplay.gridwidth = 3;
     }
 
+    private void setUpReadingGoalConstraints() {
+
+    }
+
     // can't figure out how to include emoji since it is a character
 //    // EFFECTS: returns a string of star emojis of the given length
 //    private String getStarEmojis(int num) {
@@ -333,7 +342,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
-            windowTitle.setText(fieldChangeName.getText());
+            bookshelfTitle.setText(fieldChangeName.getText());
         }
         if (e.getActionCommand().equals("saveBookshelf")) {
             try {
@@ -349,7 +358,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             try {
                 jsonReader = new JsonReader(JSON_STORE);
                 bs = jsonReader.read();
-                windowTitle.setText(bs.getName());
+                bookshelfTitle.setText(bs.getName());
             } catch (IOException exc) {
                 //
             }
