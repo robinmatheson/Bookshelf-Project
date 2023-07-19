@@ -94,6 +94,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setMinimumSize(new Dimension(1200, 600));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
+        c.anchor = GridBagConstraints.CENTER;
     }
 
     // MODIFIES: frame
@@ -124,6 +125,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for adding book functionality, sets constrains and adds to fame
     private void setUpAddBook() {
         // title
+        c.insets = new Insets(40, 0, 0, 0);
         JLabel labelTitle = new JLabel("Title:");
         c.gridx = 0;
         c.gridy = 1;
@@ -133,6 +135,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         c.gridy = 1;
         add(fieldTitle, c);
         // author
+        c.insets = new Insets(0, 0, 0, 0);
         JLabel labelAuthor = new JLabel("Author:");
         c.gridx = 0;
         c.gridy = 2;
@@ -175,6 +178,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // MODIFIES: frame
     // EFFECTS: constructs labels and field to remove a book from the bookshelf, sets constraints and adds to panel
     private void setUpBurnBook() {
+        c.insets = new Insets(30, 0, 10, 0);
         JLabel labelBurnBook = new JLabel("Enter title of the book you want to remove:");
         c.gridx = 0;
         c.gridy = 6;
@@ -195,6 +199,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs label and button associated with creating and displaying a reading goal, sets constraints
     //          and adds to frame
     private void setUpReadingGoal() {
+        c.insets = new Insets(0, 0, 10, 0);
         JLabel labelSetGoal = new JLabel("Enter a new reading goal:");
         c.gridx = 0;
         c.gridy = 7;
@@ -211,8 +216,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setGoalButton.addActionListener(this);
         // display
         labelDisplayGoal = new JLabel("");
-        c.gridx = 4;
-        c.gridy = 11;
+        c.gridx = 0;
+        c.gridy = 10;
+        c.gridwidth = 2;
         add(labelDisplayGoal, c);
         updateReadingGoal();
     }
@@ -221,6 +227,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for changing the name of the bookshelf, sets constraints and
     //          adds them to frame
     private void setUpChangeBookshelfName() {
+        c.gridwidth = 1;
         JLabel labelChangeName = new JLabel("Enter a new name for your bookshelf:");
         c.gridx = 0;
         c.gridy = 8;
@@ -241,14 +248,14 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for persistence, sets constraints and adds them to frame
     private void setUpPersistence() {
         JButton saveBookshelfButton = new JButton("Save Bookshelf");
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 9;
         add(saveBookshelfButton, c);
         saveBookshelfButton.setActionCommand("saveBookshelf");
         saveBookshelfButton.addActionListener(this);
         JButton loadBookshelfButton = new JButton("Load Bookshelf");
         c.gridx = 1;
-        c.gridy = 10;
+        c.gridy = 9;
         add(loadBookshelfButton, c);
         loadBookshelfButton.setActionCommand("loadBookshelf");
         loadBookshelfButton.addActionListener(this);
@@ -266,7 +273,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         colNames.add("Rating");
         dtmBooks = new DefaultTableModel(colNames, 1);
         JScrollPane scroller = new JScrollPane(new JTable(dtmBooks));
-        //scroller.setMinimumSize(new Dimension(300, 300));
         c.gridx = 3;
         c.gridy = 1;
         c.gridwidth = 3;
@@ -278,8 +284,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs label for the number of books shelved, sets constraints and adds to frame
     public void setUpCardinality() {
         labelDisplayCard = new JLabel("");
-        c.gridx = 3;
-        c.gridy = 12;
+        c.gridx = 4;
+        c.gridy = 11;
+        c.anchor = GridBagConstraints.CENTER;
         add(labelDisplayCard, c);
         updateCardinality();
     }
