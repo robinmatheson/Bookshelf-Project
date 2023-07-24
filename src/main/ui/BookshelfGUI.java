@@ -15,9 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Objects;
-import java.util.Vector;
 
 import static java.lang.Integer.parseInt;
 import static javax.swing.JOptionPane.showInputDialog;
@@ -94,7 +92,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setMinimumSize(new Dimension(1200, 600));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
-        c.anchor = GridBagConstraints.CENTER;
     }
 
     // MODIFIES: frame
@@ -265,14 +262,19 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, sets constraints and adds
     //          to frame
     private void setUpShelfDisplay() {
-        // TODO
-        Vector<String> colNames = new Vector<>();
-        colNames.add("Title");
-        colNames.add("Author");
-        colNames.add("Status");
-        colNames.add("Rating");
-        dtmBooks = new DefaultTableModel(colNames, 1);
-        JScrollPane scroller = new JScrollPane(new JTable(dtmBooks));
+        String[] colNames = {"Title", "Author", "Status", "Rating"};
+        dtmBooks = new DefaultTableModel(colNames, 1)
+        {
+            public Class getColumnClass(int column) {
+                if (column == 3) {
+                    return Icon.class;
+                } else {
+                    return super.getColumnClass(column);
+                }
+            }
+        };
+        JTable table = new JTable(dtmBooks);
+        JScrollPane scroller = new JScrollPane(table);
         c.gridx = 3;
         c.gridy = 1;
         c.gridwidth = 3;
@@ -395,18 +397,41 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 //        }
     }
 
-    // TODO
     // MODIFIES: this
     // EFFECTS: adds info of added book to booksInfo
     private void addBookToBooksInfo(Book b) {
-        //booksInfo.addElement(convertBookToDisplayString(b));
+        Object[] bookData = {b.getTitle(), b.getAuthor(), statusToNiceString(b.getStatus()),
+                selectRatingImage(b.getRating())};
+        dtmBooks.addRow(bookData);
     }
 
-    // TODO
-    // EFFECTS: converts book info to a string for display on bookshelf
-    private String convertBookToDisplayString(Book b) {
-        return b.getTitle() + " by " + b.getAuthor() + ", " + statusToNiceString(b.getStatus()) + ", " + b.getRating()
-                + " stars";
+    // EFFECTS: converts rating to a string of star characters
+    private ImageIcon selectRatingImage(int rating) {
+        if (rating == 0) {
+            return new ImageIcon();
+        } else {
+            ImageIcon imageIcon = null;
+            switch (rating) {
+                case 1:
+                    imageIcon = new ImageIcon(getClass().getResource("/resources/1-star-transparent.png"));
+                    break;
+                case 2:
+                    imageIcon = new ImageIcon(getClass().getResource("/resources/2-stars-transparent.png"));
+                    break;
+                case 3:
+                    imageIcon = new ImageIcon(getClass().getResource("/resources/3-stars-transparent.png"));
+                    break;
+                case 4:
+                    imageIcon = new ImageIcon(getClass().getResource("/resources/4-stars-transparent.png"));
+                    break;
+                case 5:
+                    imageIcon = new ImageIcon(getClass().getResource("/resources/5-stars-transparent.png"));
+                    break;
+            }
+            Image img = imageIcon.getImage();
+            Image scaled = img.getScaledInstance(70, 13, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaled);
+        }
     }
 
     // EFFECTS: converts BookStatus to string to display
