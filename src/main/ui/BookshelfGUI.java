@@ -10,6 +10,7 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Vector;
 
 import static java.lang.Integer.parseInt;
 import static javax.swing.JOptionPane.showInputDialog;
@@ -40,6 +42,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JTextField fieldChangeName;
 
     private DefaultTableModel dtmBooks;
+    private JTable jTableBooks;
+    private JScrollPane scroller;
 
     private GridBagConstraints c = new GridBagConstraints();
 
@@ -280,8 +284,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 }
             }
         };
-        JTable table = new JTable(dtmBooks);
-        JScrollPane scroller = new JScrollPane(table);
+        jTableBooks = new JTable(dtmBooks);
+        scroller = new JScrollPane(jTableBooks);
         c.gridx = 3;
         c.gridy = 1;
         c.gridwidth = 3;
@@ -318,7 +322,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
-            removeBookFromBooksInfo(bs.getBook(titleToBurn));
+            removeBookFromBooksInfo(titleToBurn);
             if (bs.getBook(titleToBurn).getStatus() == BookStatus.READ) {
                 updateReadingGoal();
             }
@@ -392,19 +396,22 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // TODO
     // MODIFIES: this
     // EFFECTS: removes info of deleted book from booksInfo
-    private void removeBookFromBooksInfo(Book b) {
-//        String val = convertBookToDisplayString(b);
-//        int idx = -1;
-//        for (int i = 0; i < booksInfo.size(); i++) {
-//            String elt = booksInfo.elementAt(i);
-//            if (elt.equals(val)) {
-//                idx = i;
-//                break;
-//            }
-//        }
-//        if (idx != -1) {
-//            booksInfo.remove(idx);
-//        }
+    private void removeBookFromBooksInfo(String title) {
+        int idx = -1;
+        Vector<Vector> vec = dtmBooks.getDataVector();
+        for (int i = 1; i < dtmBooks.getRowCount(); i++) {
+            Vector row = vec.elementAt(i);
+            Object obj = row.elementAt(0);
+            String ttl = obj.toString();
+            if (ttl.equals(title)) {
+                idx = i;
+                break;
+            }
+        }
+        if (idx != -1) {
+            dtmBooks.removeRow(idx);
+            dtmBooks.fireTableDataChanged();
+        }
     }
 
     // MODIFIES: this
