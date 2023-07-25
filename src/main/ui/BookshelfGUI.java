@@ -52,8 +52,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         initializeGUI();
     }
 
-    // EFFECTS: opens pop-up window and constructs bookshelf; if no input or cancel button pressed, sets name of
-    //          bookshelf to default "My Bookshelf"
+    // EFFECTS: opens pop-up window and instantiates bookshelf;
+    //          if no input or cancel button pressed, sets name of bookshelf to default "My Bookshelf"
     private void initializeGUI() {
         String inputName = showInputDialog("Please enter the name of your bookshelf:");
         if (Objects.equals(inputName, "") || inputName == null) {
@@ -303,6 +303,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         updateCardinality();
     }
 
+    // MODIFIES: this
     // EFFECTS: listens for actions performed and executes methods when detected
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -367,7 +368,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: dtmBooks
     // EFFECTS: removes all books from table and loads new books in from file
     private void loadedShelfAddBooks() {
         // remove books from previous bookshelf
@@ -404,7 +405,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: dtmBooks
     // EFFECTS: removes info of deleted book from dtmBooks
     private void removeBookFromBooksInfo(String title) {
         // find index of row to be deleted
@@ -419,14 +420,15 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 break;
             }
         }
-        // deletes row and updates display of table
+        // deletes row and updates display of table if book with title is in table
         if (idx != -1) {
             dtmBooks.removeRow(idx);
             dtmBooks.fireTableDataChanged();
         }
     }
 
-    // MODIFIES: this
+    // REQUIRES: book must have title different from those already in the table/bookshelf
+    // MODIFIES: dtmBooks
     // EFFECTS: adds info of added book to dtmBooks
     private void addBookToBooksInfo(Book b) {
         Object[] bookData = {b.getTitle(), b.getAuthor(), statusToNiceString(b.getStatus()),
@@ -434,6 +436,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         dtmBooks.addRow(bookData);
     }
 
+    // REQUIRES: rating is a valid rating (guaranteed due to JComboBox)
     // EFFECTS: converts rating to an ImageIcon of stars and returns it
     private ImageIcon selectRatingImage(int rating) {
         if (rating == 0) {
@@ -464,6 +467,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
+    // REQUIRES: status is a valid BookStatus (guaranteed due to JComboBox)
     // EFFECTS: converts BookStatus to string to display
     private String statusToNiceString(BookStatus status) {
         if (status == BookStatus.READ) {
