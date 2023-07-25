@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
@@ -357,13 +358,16 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes all books from table and loads new books in from file
     private void loadedShelfAddBooks() {
-        // TODO
-//        booksInfo.clear();
-//        Collection<Book> books = bs.getAllBooks();
-//        for (Book b : books) {
-//            addBookToBooksInfo(b);
-//        }
+        for (int i = 0; i < dtmBooks.getRowCount(); i++) {
+            dtmBooks.removeRow(i);
+        }
+        Collection<Book> books = bs.getAllBooks();
+        for (Book b : books) {
+            addBookToBooksInfo(b);
+        }
     }
 
     private void updateCardinality() {
