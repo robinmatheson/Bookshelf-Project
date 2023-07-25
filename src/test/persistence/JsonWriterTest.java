@@ -5,10 +5,8 @@ import model.BookStatus;
 import model.Bookshelf;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

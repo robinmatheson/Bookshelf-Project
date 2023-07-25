@@ -5,10 +5,10 @@ import persistence.Writable;
 
 // represents a book with title, author name, reading status, and star rating
 public class Book implements Writable {
-    private String title;             // title of book
-    private String author;            // name of author
-    private BookStatus status;        // status is READ, CURRENTLYREADING, or TOBEREAD
-    private int rating;               // star rating for read books between 1 and 5; 0 if not yet read
+    private final String title;             // title of book
+    private final String author;            // name of author
+    private final BookStatus status;        // status is READ, CURRENTLYREADING, or TOBEREAD
+    private final int rating;               // star rating for read books between 1 and 5; 0 if not yet read
 
     /*
      * REQUIRES: status is one of READ, CURRENTLYREADING, or TOBEREAD;
@@ -27,14 +27,18 @@ public class Book implements Writable {
 
     // EFFECTS: converts string to BookStatus
     private BookStatus convertStatus(String input) {
-        if (input.equals("r") || input.equals("read")) {
-            return BookStatus.READ;
-        } else if (input.equals("cr") || input.equals("currently reading")) {
-            return BookStatus.CURRENTLYREADING;
-        } else if (input.equals("tbr") || input.equals("to be read")) {
-            return BookStatus.TOBEREAD;
-        } else {
-            return null;
+        switch (input) {
+            case "r":
+            case "read":
+                return BookStatus.READ;
+            case "cr":
+            case "currently reading":
+                return BookStatus.CURRENTLYREADING;
+            case "tbr":
+            case "to be read":
+                return BookStatus.TOBEREAD;
+            default:
+                return null;
         }
     }
 

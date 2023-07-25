@@ -10,7 +10,6 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -42,13 +41,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     private JTextField fieldChangeName;
 
     private DefaultTableModel dtmBooks;
-    private JTable jTableBooks;
-    private JScrollPane scroller;
 
-    private GridBagConstraints c = new GridBagConstraints();
+    private final GridBagConstraints c = new GridBagConstraints();
 
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/bookshelf.json";
 
     private Bookshelf bs;
@@ -284,8 +279,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 }
             }
         };
-        jTableBooks = new JTable(dtmBooks);
-        scroller = new JScrollPane(jTableBooks);
+        JTable jTableBooks = new JTable(dtmBooks);
+        JScrollPane scroller = new JScrollPane(jTableBooks);
         c.gridx = 3;
         c.gridy = 1;
         c.gridwidth = 3;
@@ -340,7 +335,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
         if (e.getActionCommand().equals("saveBookshelf")) {
             try {
-                jsonWriter = new JsonWriter(JSON_STORE);
+                JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
                 jsonWriter.open();
                 jsonWriter.write(bs);
                 jsonWriter.close();
@@ -350,7 +345,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
         if (e.getActionCommand().equals("loadBookshelf")) {
             try {
-                jsonReader = new JsonReader(JSON_STORE);
+                JsonReader jsonReader = new JsonReader(JSON_STORE);
                 bs = jsonReader.read();
                 bookshelfTitle.setText(bs.getName());
                 loadedShelfAddBooks();
@@ -393,7 +388,6 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // TODO
     // MODIFIES: this
     // EFFECTS: removes info of deleted book from booksInfo
     private void removeBookFromBooksInfo(String title) {

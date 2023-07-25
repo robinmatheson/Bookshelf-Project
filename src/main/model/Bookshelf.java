@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import javax.swing.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,7 +12,7 @@ import java.util.Iterator;
 public class Bookshelf implements Writable {
 
     private String name;
-    private HashMap<String, Book> books; // key = title, value = book
+    private final HashMap<String, Book> books; // key = title, value = book
     private int goal;
 
     // EFFECTS: constructs a bookshelf with given name and owner's name

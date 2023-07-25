@@ -3,9 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static model.BookStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookshelfTest {
@@ -16,10 +13,6 @@ public class BookshelfTest {
     private Book book3;
     private Book book4;
     private Book book5;
-    private Book book6;
-    private Book book7;
-    private Book book8;
-    private Book book9;
 
     @BeforeEach
     public void setUp() {
@@ -30,10 +23,10 @@ public class BookshelfTest {
         book3 = new Book("The Secret History", "Donna Tartt", "tbr", 0);
         book4 = new Book("Heartstopper", "Alice Oseman", "cr", 0);
         book5 = new Book("The Idiot", "Elif Batuman", "cr", 0);
-        book6 = new Book("The Poppy War", "R. F. Kuang", "tbr", 0);
-        book7 = new Book("The Ice Princess", "Camilla Lackberg", "r", 3);
-        book8 = new Book("Circe", "Madeline Miller", "r", 2);
-        book9 = new Book("Baby Rudin", "Walter Rudin", "r", 1);
+        Book book6 = new Book("The Poppy War", "R. F. Kuang", "tbr", 0);
+        Book book7 = new Book("The Ice Princess", "Camilla Lackberg", "r", 3);
+        Book book8 = new Book("Circe", "Madeline Miller", "r", 2);
+        Book book9 = new Book("Baby Rudin", "Walter Rudin", "r", 1);
     }
 
     @Test
