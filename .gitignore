@@ -1,3 +1,9 @@
 *.class
 workspace.xml
 bookshelf.json
+testReaderEmptyWorkRoom.json
+testReaderGeneralWorkRoom.json
+testWriterEmptyBookshelf.json
+testWriterGeneralBookshelf.json
+testReaderEmptyBookshelf.json
+testReaderGeneralBookshelf.json

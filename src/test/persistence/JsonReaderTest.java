@@ -29,12 +29,12 @@ public class JsonReaderTest extends JsonTest {
     void testReaderEmptyBookshelf() {
         try {
             Bookshelf bs = new Bookshelf("My Bookshelf");
-            JsonWriter writer = new JsonWriter("./data/testReaderEmptyWorkRoom.json");
+            JsonWriter writer = new JsonWriter("./data/testReaderEmptyBookshelf.json");
             writer.open();
             writer.write(bs);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testReaderEmptyWorkRoom.json");
+            JsonReader reader = new JsonReader("./data/testReaderEmptyBookshelf.json");
             Bookshelf newBS = reader.read();
             assertEquals("My Bookshelf", newBS.getName());
             assertEquals(0, newBS.getCardinality());
@@ -50,12 +50,12 @@ public class JsonReaderTest extends JsonTest {
             bs.shelveBook(new Book("Kingdom of Ash", "Sarah J. Maas", "cr",
                     0));
             bs.shelveBook(new Book("Heartstopper", "Alice Oseman", "cr", 5));
-            JsonWriter writer = new JsonWriter("./data/testReaderGeneralWorkRoom.json");
+            JsonWriter writer = new JsonWriter("./data/testReaderGeneralBookshelf.json");
             writer.open();
             writer.write(bs);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
+            JsonReader reader = new JsonReader("./data/testReaderGeneralBookshelf.json");
             Bookshelf newBS = reader.read();
             assertEquals("My Bookshelf", newBS.getName());
             HashMap<String, Book> books = newBS.getBooks();

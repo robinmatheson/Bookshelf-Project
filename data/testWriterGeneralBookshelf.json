@@ -13,6 +13,6 @@
             "status": "CURRENTLYREADING"
         }
     ],
-    "goal": 0,
+    "goal": -1,
     "name": "My Bookshelf"
 }
