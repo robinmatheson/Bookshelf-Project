@@ -22,11 +22,8 @@ import java.util.Vector;
 import static java.lang.Integer.parseInt;
 import static javax.swing.JOptionPane.showInputDialog;
 
-// opens a GUI that  allows you to create a bookshelf and add books to it
+// class for Bookshelf GUI
 public class BookshelfGUI extends JFrame implements ActionListener {
-
-    private JPanel panel;
-    private JFrame frame;
 
     private JLabel bookshelfTitle;
     private JLabel labelDisplayGoal;
@@ -42,6 +39,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
 
     private DefaultTableModel dtmBooks;
 
+    // reused for adding every component to panel
     private final GridBagConstraints c = new GridBagConstraints();
 
     private static final String JSON_STORE = "./data/bookshelf.json";
@@ -66,7 +64,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         mainMenu();
     }
 
-    // EFFECTS: opens a panel with the main menu
+    // MODIFIES: this
+    // EFFECTS: calls all functions to set up window
     private void mainMenu() {
         setUpMainMenu();
         setUpGraphic();
@@ -83,50 +82,42 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         setResizable(false);
     }
 
-    // MODIFIES: frame
+    // MODIFIES: this
     // EFFECTS: builds and adds frame and components
     private void setUpMainMenu() {
-        frame = new JFrame();
-        panel = new JPanel();
-        add(panel);
         setUpClosingFunctions();
         setMinimumSize(new Dimension(1300, 600));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
     }
 
-    // MODIFIES: frame
-    // EFFECTS: puts icon in main menu frame
+    // MODIFIES: this
+    // EFFECTS: puts graphic in top left corner of frame
     private void setUpGraphic() {
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/resources/bookshelf-transparent.png"));
         Image img = imageIcon.getImage();
-        Image scaled = img.getScaledInstance(225, 60, Image.SCALE_SMOOTH);
+        Image scaled = img.getScaledInstance(250, 65, Image.SCALE_SMOOTH);
         ImageIcon fin = new ImageIcon(scaled);
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 1;
-        c.weightx = 0.5;
-        panel.add(new JLabel(fin, SwingConstants.CENTER), c);
+        add(new JLabel(fin), c);
     }
 
-    // MODIFIES: frame
-    // EFFECTS: adds bookshelf name as JLabel at top left of window
+    // MODIFIES: this
+    // EFFECTS: adds bookshelf name as JLabel at top of panel
     private void addNameTitle() {
         bookshelfTitle = new JLabel(bs.getName(), SwingConstants.RIGHT);
         bookshelfTitle.setFont(new Font("SansSerif", Font.BOLD, 25));
         c.gridx = 1;
         c.gridy = 0;
-        c.gridwidth = 2;
-        c.weightx = 0.5;
-        panel.add(bookshelfTitle, c);
+        add(bookshelfTitle, c);
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for adding book functionality, sets constrains and adds to fame
+    // MODIFIES: this
+    // EFFECTS: constructs labels, fields and button for adding book functionality, sets constraints and adds to fame
     private void setUpAddBook() {
         // title
         c.gridwidth = 1;
-        c.fill = GridBagConstraints.NONE;
         c.insets = new Insets(40, 0, 0, 0);
         JLabel labelTitle = new JLabel("Title:");
         c.gridx = 0;
@@ -177,18 +168,22 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         add(addBookButton, c);
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs labels and field to remove a book from the bookshelf, sets constraints and adds to panel
+    // MODIFIES: this
+    // EFFECTS: constructs label, field and button to remove a book from the bookshelf, sets constraints and adds to
+    //          frame
     private void setUpBurnBook() {
+        // label
         c.insets = new Insets(30, 0, 10, 0);
         JLabel labelBurnBook = new JLabel("Enter title of the book you want to remove:");
         c.gridx = 0;
         c.gridy = 6;
         add(labelBurnBook, c);
+        // text field
         fieldBurnBook = new JTextField(15);
         c.gridx = 1;
         c.gridy = 6;
         add(fieldBurnBook, c);
+        // button
         JButton burnBookButton = new JButton("Burn Book");
         c.gridx = 2;
         c.gridy = 6;
@@ -197,26 +192,30 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         burnBookButton.addActionListener(this);
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs label and button associated with creating and displaying a reading goal, sets constraints
+    // MODIFIES: this
+    // EFFECTS: constructs labels, field and button associated with creating and displaying a reading goal, sets constraints
     //          and adds to frame
     private void setUpReadingGoal() {
+        // setting reading goal label
         c.insets = new Insets(0, 0, 10, 0);
         JLabel labelSetGoal = new JLabel("Enter a new reading goal:");
         c.gridx = 0;
         c.gridy = 7;
         add(labelSetGoal, c);
+        // text field
         fieldSetGoal = new JTextField(8);
         c.gridx = 1;
         c.gridy = 7;
         add(fieldSetGoal, c);
+        // button
         JButton setGoalButton = new JButton("Set Goal");
         c.gridx = 2;
         c.gridy = 7;
         add(setGoalButton, c);
         setGoalButton.setActionCommand("setGoalButton");
         setGoalButton.addActionListener(this);
-        // display
+
+        // displaying reading goal
         labelDisplayGoal = new JLabel("");
         c.gridx = 0;
         c.gridy = 10;
@@ -226,19 +225,22 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         updateReadingGoal();
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for changing the name of the bookshelf, sets constraints and
+    // MODIFIES: this
+    // EFFECTS: constructs label, field and button for changing the name of the bookshelf, sets constraints and
     //          adds them to frame
     private void setUpChangeBookshelfName() {
         c.gridwidth = 1;
+        // label
         JLabel labelChangeName = new JLabel("Enter a new name for your bookshelf:");
         c.gridx = 0;
         c.gridy = 8;
         add(labelChangeName, c);
+        // text field
         fieldChangeName = new JTextField(15);
         c.gridx = 1;
         c.gridy = 8;
         add(fieldChangeName, c);
+        // button
         JButton changeNameButton = new JButton("Enter");
         c.gridx = 2;
         c.gridy = 8;
@@ -247,15 +249,17 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         changeNameButton.addActionListener(this);
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for persistence, sets constraints and adds them to frame
+    // MODIFIES: this
+    // EFFECTS: constructs labels and buttons for persistence, sets constraints and adds them to frame
     private void setUpPersistence() {
+        // saving bookshelf to file
         JButton saveBookshelfButton = new JButton("Save Bookshelf");
         c.gridx = 0;
         c.gridy = 9;
         add(saveBookshelfButton, c);
         saveBookshelfButton.setActionCommand("saveBookshelf");
         saveBookshelfButton.addActionListener(this);
+        // loading bookshelf from file
         JButton loadBookshelfButton = new JButton("Load Bookshelf");
         c.gridx = 1;
         c.gridy = 9;
@@ -264,8 +268,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         loadBookshelfButton.addActionListener(this);
     }
 
-    // MODIFIES: frame
-    // EFFECTS: constructs labels and fields for viewing list of books in the bookshelf, sets constraints and adds
+    // MODIFIES: this
+    // EFFECTS: constructs tables and scroller for viewing list of books in the bookshelf, sets constraints and adds
     //          to frame
     private void setUpShelfDisplay() {
         String[] colNames = {"Title", "Author", "Status", "Rating"};
@@ -288,7 +292,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         add(scroller, c);
     }
 
-    // MODIFIES: frame
+    // MODIFIES: this
     // EFFECTS: constructs label for the number of books shelved, sets constraints and adds to frame
     public void setUpCardinality() {
         labelDisplayCard = new JLabel("");
@@ -302,6 +306,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: listens for actions performed and executes methods when detected
     @Override
     public void actionPerformed(ActionEvent e) {
+        // adding a book
         if (e.getActionCommand().equals("addBookButton")) {
             String title = fieldTitle.getText();
             String author = fieldAuthor.getText();
@@ -315,6 +320,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             }
             updateCardinality();
         }
+        // removing a book
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
             removeBookFromBooksInfo(titleToBurn);
@@ -325,14 +331,17 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             updateReadingGoal();
             updateCardinality();
         }
+        // setting a reading goal
         if (e.getActionCommand().equals("setGoalButton")) {
             bs.setGoal(parseInt(fieldSetGoal.getText()));
             updateReadingGoal();
         }
+        // changing the name of the bookshelf
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
             bookshelfTitle.setText(fieldChangeName.getText());
         }
+        // saving bookshelf to file
         if (e.getActionCommand().equals("saveBookshelf")) {
             try {
                 JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
@@ -343,6 +352,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 //
             }
         }
+        // loading bookshelf from file
         if (e.getActionCommand().equals("loadBookshelf")) {
             try {
                 JsonReader jsonReader = new JsonReader(JSON_STORE);
@@ -360,19 +370,25 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: removes all books from table and loads new books in from file
     private void loadedShelfAddBooks() {
+        // remove books from previous bookshelf
         for (int i = 0; i < dtmBooks.getRowCount(); i++) {
             dtmBooks.removeRow(i);
         }
+        // add in all new books from file
         Collection<Book> books = bs.getAllBooks();
         for (Book b : books) {
             addBookToBooksInfo(b);
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates display of number of books on bookshelf
     private void updateCardinality() {
         labelDisplayCard.setText("Number of books shelved: " + bs.getCardinality());
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates display of reading goal
     private void updateReadingGoal() {
         if (bs.getGoal() == -1) {
             labelDisplayGoal.setText("No reading goal set.");
@@ -389,8 +405,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes info of deleted book from booksInfo
+    // EFFECTS: removes info of deleted book from dtmBooks
     private void removeBookFromBooksInfo(String title) {
+        // find index of row to be deleted
         int idx = -1;
         Vector<Vector> vec = dtmBooks.getDataVector();
         for (int i = 1; i < dtmBooks.getRowCount(); i++) {
@@ -402,6 +419,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 break;
             }
         }
+        // deletes row and updates display of table
         if (idx != -1) {
             dtmBooks.removeRow(idx);
             dtmBooks.fireTableDataChanged();
@@ -409,16 +427,17 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds info of added book to booksInfo
+    // EFFECTS: adds info of added book to dtmBooks
     private void addBookToBooksInfo(Book b) {
         Object[] bookData = {b.getTitle(), b.getAuthor(), statusToNiceString(b.getStatus()),
                 selectRatingImage(b.getRating())};
         dtmBooks.addRow(bookData);
     }
 
-    // EFFECTS: converts rating to a string of star characters
+    // EFFECTS: converts rating to an ImageIcon of stars and returns it
     private ImageIcon selectRatingImage(int rating) {
         if (rating == 0) {
+            // empty image if no rating
             return new ImageIcon();
         } else {
             ImageIcon imageIcon = null;
@@ -472,7 +491,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         for (Event event : EventLog.getInstance()) {
             System.out.println(event.toString() + "\n");
         }
-        frame.dispose();
+        dispose();
         System.exit(0);
     }
 
