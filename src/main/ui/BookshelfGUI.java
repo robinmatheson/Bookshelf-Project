@@ -69,7 +69,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: opens a panel with the main menu
     private void mainMenu() {
         setUpMainMenu();
-        setUpIcon();
+        setUpGraphic();
+        addNameTitle();
         setUpAddBook();
         setUpBurnBook();
         setUpReadingGoal();
@@ -89,32 +90,34 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         panel = new JPanel();
         add(panel);
         setUpClosingFunctions();
-        setMinimumSize(new Dimension(1200, 600));
+        setMinimumSize(new Dimension(1300, 600));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
     }
 
     // MODIFIES: frame
     // EFFECTS: puts icon in main menu frame
-    private void setUpIcon() {
-        ImageIcon imageIcon = new ImageIcon(
-                getClass().getResource("/resources/img.png"));
+    private void setUpGraphic() {
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/resources/bookshelf-transparent.png"));
         Image img = imageIcon.getImage();
-        Image newImage = img.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-        JLabel mmIcon = new JLabel(new ImageIcon(newImage));
+        Image scaled = img.getScaledInstance(225, 60, Image.SCALE_SMOOTH);
+        ImageIcon fin = new ImageIcon(scaled);
         c.gridx = 0;
         c.gridy = 0;
-        panel.add(mmIcon, c);
-        addNameTitle();
+        c.gridwidth = 1;
+        c.weightx = 0.5;
+        panel.add(new JLabel(fin, SwingConstants.CENTER), c);
     }
 
     // MODIFIES: frame
     // EFFECTS: adds bookshelf name as JLabel at top left of window
     private void addNameTitle() {
-        bookshelfTitle = new JLabel(bs.getName());
+        bookshelfTitle = new JLabel(bs.getName(), SwingConstants.RIGHT);
         bookshelfTitle.setFont(new Font("SansSerif", Font.BOLD, 25));
-        c.gridx = 2;
+        c.gridx = 1;
         c.gridy = 0;
+        c.gridwidth = 2;
+        c.weightx = 0.5;
         panel.add(bookshelfTitle, c);
     }
 
@@ -122,6 +125,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     // EFFECTS: constructs labels and fields for adding book functionality, sets constrains and adds to fame
     private void setUpAddBook() {
         // title
+        c.gridwidth = 1;
+        c.fill = GridBagConstraints.NONE;
         c.insets = new Insets(40, 0, 0, 0);
         JLabel labelTitle = new JLabel("Title:");
         c.gridx = 0;
@@ -216,6 +221,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         c.gridx = 0;
         c.gridy = 10;
         c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 0, 0);
         add(labelDisplayGoal, c);
         updateReadingGoal();
     }
