@@ -13,8 +13,10 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // source: JsonSerializationDemo
-// represents a reader that reads workroom from JSON data stored in file
+
+// represents a reader that reads bookshelf from JSON data stored in file
 public class JsonReader {
+
     private final String source;
 
     // EFFECTS: constructs reader to read from source file
@@ -41,6 +43,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // MODIFIES: bs
     // EFFECTS: parses bookshelf from JSON object and returns it
     private Bookshelf parseBookshelf(JSONObject jsonObject) {
         String name = jsonObject.getString("name");

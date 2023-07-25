@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 // source: JsonSerializationDemo
 // represents a writer that writes JSON representation of bookshelf to file
 public class JsonWriter {
+
     private static final int TAB = 4;
     private PrintWriter writer;
     private final String destination;

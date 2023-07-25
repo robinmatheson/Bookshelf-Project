@@ -6,6 +6,7 @@ import model.BookStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // source: JsonSerializationDemo
+// to simplify Json testing
 public class JsonTest {
     protected void checkBook(String title, String author, BookStatus status, int rating, Book book) {
         assertEquals(title, book.getTitle());
