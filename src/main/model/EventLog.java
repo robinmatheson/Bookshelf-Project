@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+// source for class: CPSC210 Alarm System project
+
 /**
  * Represents a log of alarm system events.
  * We use the Singleton Design Pattern to ensure that there is only

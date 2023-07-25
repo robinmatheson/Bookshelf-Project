@@ -3,6 +3,7 @@ package model;
 import java.util.Calendar;
 import java.util.Date;
 
+// source for class: CPSC210 Alarm System project
 
 /**
  * Represents an alarm system event.
