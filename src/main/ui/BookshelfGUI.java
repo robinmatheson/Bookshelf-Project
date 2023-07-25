@@ -308,6 +308,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // adding a book
+        // REQUIRES: title of book does not match one already in bookshelf
         if (e.getActionCommand().equals("addBookButton")) {
             String title = fieldTitle.getText();
             String author = fieldAuthor.getText();
@@ -333,6 +334,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             updateCardinality();
         }
         // setting a reading goal
+        // REQUIRES: goal is an integer >= 0, or -1 to indicate no goal
         if (e.getActionCommand().equals("setGoalButton")) {
             bs.setGoal(parseInt(fieldSetGoal.getText()));
             updateReadingGoal();
@@ -394,14 +396,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         if (bs.getGoal() == -1) {
             labelDisplayGoal.setText("No reading goal set.");
         } else {
-            int num = bs.getNumberRead();
-            if (num == 1) {
-                labelDisplayGoal.setText("You have read " + num + " book out of your goal of " + bs.getGoal()
-                        + "!");
-            } else {
-                labelDisplayGoal.setText("You have read " + num + " books out of your goal of " + bs.getGoal()
-                        + "!");
-            }
+            labelDisplayGoal.setText(bs.getGoalProgress());
         }
     }
 

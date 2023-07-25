@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-// represents all the books that are added to the user's bookshelf
+// represents the object that contains all the books that are added to the user's bookshelf
 public class Bookshelf implements Writable {
 
     private String name;
@@ -24,21 +24,7 @@ public class Bookshelf implements Writable {
         EventLog.getInstance().logEvent(new Event("Made bookshelf called " + getName()));
     }
 
-    // REQUIRES: goal >= 0
-    // MODIFIES: this
-    // EFFECTS: sets goal to int given
-    public void setGoal(int goal) {
-        this.goal = goal;
-        EventLog.getInstance().logEvent(new Event("Set reading goal to " + goal + " books."));
-    }
-
-    // MODIFIES: this
-    // EFFECTS: changes bookshelf name to one given
-    public void setName(String newName) {
-        this.name = newName;
-        EventLog.getInstance().logEvent(new Event("Changed name of bookshelf to " + getName()));
-    }
-
+    // REQUIRES: title of book does not match one that is already in the bookshelf
     // MODIFIES: this
     // EFFECTS: adds book to list of books in the bookshelf
     public void shelveBook(Book book) {
@@ -60,8 +46,7 @@ public class Bookshelf implements Writable {
 
     // getters
 
-    // REQUIRES: book is already in bookshelf
-    // EFFECTS: returns given book in bookshelf
+    // EFFECTS: returns given book in bookshelf, or null if book is not in the bookshelf
     public Book getBook(String title) {
         return books.get(title);
     }
@@ -102,7 +87,26 @@ public class Bookshelf implements Writable {
             }
         }
         return count;
-}
+    }
+
+    // setters
+
+    // REQUIRES: goal >= 0
+    // MODIFIES: this
+    // EFFECTS: sets goal to int given
+    public void setGoal(int goal) {
+        this.goal = goal;
+        EventLog.getInstance().logEvent(new Event("Set reading goal to " + goal + " books."));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes bookshelf name to one given
+    public void setName(String newName) {
+        this.name = newName;
+        EventLog.getInstance().logEvent(new Event("Changed name of bookshelf to " + getName()));
+    }
+
+    // getters
 
     // EFFECTS: returns owner's goal for number of books they want to read
     public int getGoal() {
@@ -129,7 +133,7 @@ public class Bookshelf implements Writable {
         return json;
     }
     
-    // EFFECTS: return books in this workroom as a JSON array
+    // EFFECTS: return books in this bookshelf as a JSON array
     private JSONArray booksToJson() {
         JSONArray jsonArray = new JSONArray();
 
