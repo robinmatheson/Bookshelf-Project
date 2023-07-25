@@ -12,11 +12,11 @@ public class Book implements Writable {
 
     /*
      * REQUIRES: status is one of READ, CURRENTLYREADING, or TOBEREAD;
-     *          star rating is between 1 and 5, or 0 if not yet read
+     *          star rating is an integer between 1 and 5, or 0 if not yet read (both guaranteed due to JComboBox in GUI)
      * EFFECTS: title of book is set to title and cannot be assigned to any other book;
      *          name of author is set to author;
-     *          set status of book to one of READ, CURRENTLYREADING, or TOBEREAD;
-     *          set star rating between 1 and 5, 0 if not yet read.
+     *          set status of book to one of "r"/"read", "cr"/"currently reading", or "tbr"/"to be read";
+     *          sets star rating.
      */
     public Book(String title, String author, String status, int rating) {
         this.title = title;
@@ -25,6 +25,7 @@ public class Book implements Writable {
         this.rating = rating;
     }
 
+    // REQUIRES: input is valid conversion to a BookStatus
     // EFFECTS: converts string to BookStatus
     private BookStatus convertStatus(String input) {
         switch (input) {
