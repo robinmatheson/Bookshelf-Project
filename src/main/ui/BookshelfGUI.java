@@ -303,12 +303,13 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         updateCardinality();
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, Bookshelf, Book
     // EFFECTS: listens for actions performed and executes methods when detected
     @Override
     public void actionPerformed(ActionEvent e) {
         // adding a book
         // REQUIRES: title of book does not match one already in bookshelf
+        // MODIFIES: this, Bookshelf
         if (e.getActionCommand().equals("addBookButton")) {
             String title = fieldTitle.getText();
             String author = fieldAuthor.getText();
@@ -322,7 +323,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             }
             updateCardinality();
         }
+
         // removing a book
+        // MODIFIES: this, Bookshelf
         if (e.getActionCommand().equals("burnBookButton")) {
             String titleToBurn = fieldBurnBook.getText();
             removeBookFromBooksInfo(titleToBurn);
@@ -333,17 +336,22 @@ public class BookshelfGUI extends JFrame implements ActionListener {
             updateReadingGoal();
             updateCardinality();
         }
+
         // setting a reading goal
         // REQUIRES: goal is an integer >= 0, or -1 to indicate no goal
+        // MODIFIES: this, Bookshelf
         if (e.getActionCommand().equals("setGoalButton")) {
             bs.setGoal(parseInt(fieldSetGoal.getText()));
             updateReadingGoal();
         }
+
         // changing the name of the bookshelf
+        // MODIFIES: this, Bookshelf
         if (e.getActionCommand().equals("changeNameButton")) {
             bs.setName(fieldChangeName.getText());
             bookshelfTitle.setText(fieldChangeName.getText());
         }
+
         // saving bookshelf to file
         if (e.getActionCommand().equals("saveBookshelf")) {
             try {
@@ -355,7 +363,9 @@ public class BookshelfGUI extends JFrame implements ActionListener {
                 //
             }
         }
+
         // loading bookshelf from file
+        // MODIFIES: this, Bookshelf
         if (e.getActionCommand().equals("loadBookshelf")) {
             try {
                 JsonReader jsonReader = new JsonReader(JSON_STORE);
@@ -370,7 +380,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: dtmBooks
+    // MODIFIES: this
     // EFFECTS: removes all books from table and loads new books in from file
     private void loadedShelfAddBooks() {
         // remove books from previous bookshelf
@@ -400,7 +410,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: dtmBooks
+    // MODIFIES: this
     // EFFECTS: removes info of deleted book from dtmBooks
     private void removeBookFromBooksInfo(String title) {
         // find index of row to be deleted
@@ -422,8 +432,8 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         }
     }
 
-    // REQUIRES: book must have title different from those already in the table/bookshelf
-    // MODIFIES: dtmBooks
+    // REQUIRES: book must have title different from those already in the bookshelf
+    // MODIFIES: this
     // EFFECTS: adds info of added book to dtmBooks
     private void addBookToBooksInfo(Book b) {
         Object[] bookData = {b.getTitle(), b.getAuthor(), statusToNiceString(b.getStatus()),
@@ -490,6 +500,7 @@ public class BookshelfGUI extends JFrame implements ActionListener {
         for (Event event : EventLog.getInstance()) {
             System.out.println(event.toString() + "\n");
         }
+        // disposes of window and terminates JVM
         dispose();
         System.exit(0);
     }
