@@ -43,7 +43,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // MODIFIES: bs
+    // MODIFIES: Bookshelf
     // EFFECTS: parses bookshelf from JSON object and returns it
     private Bookshelf parseBookshelf(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
@@ -54,7 +54,6 @@ public class JsonReader {
         return bs;
     }
 
-    // MODIFIES: bs
     // EFFECTS: parses books from JSON object and adds them to bookshelf
     private void addBooks(Bookshelf bs, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("books");
@@ -64,7 +63,7 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: bs
+    // MODIFIES: Bookshelf
     // EFFECTS: parses book from JSON object and adds it to the workroom
     private void addBook(Bookshelf bs, JSONObject jsonObject) {
         String title = jsonObject.getString("title");
