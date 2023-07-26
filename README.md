@@ -1,41 +1,52 @@
-## GreatReads
+# GreatReads (GUI)
 
-GreatReads is an application that users can use to keep track of
-the books in their library. Users will be able to add a book with relevant 
-info about each book, including but not limited to a reading status and star 
-rating. Anybody who reads can use the application. I love to read, and keeping
-track of all of my books that I have read or want to read is very useful.
+*GreatReads* is an application where users can keep track of the books in their library. Users are able to add a book
+with a title, reading status, and star rating to their bookshelf, where they can keep track of their books, their
+progress towards their reading goal, and view different groupings of the books on their shelf. This is the edition of my 
+application with a graphical user interface.
 
-Please note that some functionality of this project is not implemented at this stage in order to 
-simplify my GUI.
+I created *GreatReads* as a way to learn Java, Java Swing, IntelliJ, GitHub, software construction, and building a graphical user interface. 
+As an avid reader, I wanted to try my hand at an application where I could store my books and the main information that I am interested in
+(their status and rating).
 
-## User Stories:
+Building this project from scratch taught me a lot about the process of developing an application, such as:
+- brainstorming and planning out which functionalities I wanted and if it would be feasible and reasonable with the construction of a GUI
+- implementing my functionalities effectively
+- debugging and writing tests that cover all code usage
+- creating a graphical UI using Java Swing that is effective, intuitive, and aesthetically pleasing
+- refactoring code to use a more appropriate data structure for the bookshelf
+- implementing persistence with Json
+- implementing an action log that prints when the application is closed
+- object-oriented programming, data abstraction, encapsulation, single responsibility principle, decreasing class
+coupling, increasing class cohesion, etc.
 
-*As a user, I want to be able to...*
+Note that the GUI version of *GreatReads* has fewer functionalities implemented than the console UI version. Hence, there 
+are also fewer tests as I have not created any to test the GUI.
 
-- add a book to my library
-- remove a book from my library
-- include the title, author name, read status, and star rating of each book in my library
-- be able to view a specific book in my library
-- be able to view the list of all the books in my library
-- be able to view the list of all the books in my library with a given read status or star rating
-- view the total number of books in my library
+### Features
+First, you need to create a bookshelf with a name.
+##### Then, you can:
+- add a book with the title, author name, read status, and star rating to your bookshelf
+- remove a book from your bookshelf
+- view the books on your bookshelf
+- view the total number of books you have
 - set a goal for number of books you want to read, with read books contributing to progress
-- view progress in reading goal for the year
-- save my bookshelf to file with a prompt to do so when I quit the application
-- open a saved bookshelf from file with an option to do so when I first run the application
+- view progress in reading goal
+- save your bookshelf to file
+- load a bookshelf from file
+- change the name of your bookshelf
+- view a log of your events printed to the console upon quitting
 
-## Instructions for Use
-- You generate a Bookshelf by inputting the name of your bookshelf into the initial pop-up window
-  (if you press "cancel", it will set your bookshelf to the default name "My Bookshelf").
-- You can add a book to your bookshelf by filling in the first 4 fields and clicking "Add Book"
-- You can view the number of books on your bookshelf by clicking the button "Get Cardinality"
-- You can remove a book from your bookshelf by entering the title (case-sensitive) and clicking
-   "Burn Book"
-- The icon of a stack of books is my visual component
-- You can save the current state of your bookshelf to file by pressing the "Save Bookshelf" button
-- You can load a previous bookshelf from file by pressing the "Load Bookshelf" button
+### Future plans
+- adding a prompt when first running the application to ask if the user would like to load a bookshelf from file or proceed with creating a new one
+- adding a prompt when quitting to ask if the user would like to save the current bookshelf to file
+- refactor implementation of the HashMap and hashcode generation to allow two books with the same title to be on the bookshelf
+- redesign GUI such that it utilizes panels for separating the different interactive parts of the frame
+  - i.e. all the "add book" labels, fields, combo boxes, and button would be in their own panel in a way that shows they are a collective part
 
--------
-
-There is a UML diagram in the uml package.
+### How to use
+1. Clone this repo
+2. Open the project in your favourite code editor with a Java compiler
+3. Run 'Main'
+4. A new window should open up asking for you to name your bookshelf
+5. Have fun tracking all the books on your bookshelf (or library if you've reached 1000 books!)
