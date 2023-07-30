@@ -12,7 +12,7 @@ As an avid reader, I wanted to try my hand at an application where I could store
 Building this project from scratch taught me a lot about the process of developing an application, such as:
 - brainstorming and planning out which functionalities I wanted and if it would be feasible and reasonable with the construction of a GUI
 - implementing my functionalities effectively
-- debugging and writing tests that cover all code usage
+- debugging and writing tests
 - creating a graphical UI using Java Swing that is effective, intuitive, and aesthetically pleasing
 - refactoring code to use a more appropriate data structure for the bookshelf
 - implementing persistence with Json
