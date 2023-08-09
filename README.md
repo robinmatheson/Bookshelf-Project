@@ -2,7 +2,7 @@
 
 *GreatReads* is an application where users can keep track of the books in their library. Users are able to add a book
 with a title, reading status, and star rating to their bookshelf, where they can keep track of their books, their
-progress towards their reading goal, and view different groupings of the books on their shelf. This is the edition of my 
+progress toward their reading goal, and view different groupings of the books on their shelf. This is the edition of my 
 application with a graphical user interface.
 
 I created *GreatReads* as a way to learn Java, Java Swing, IntelliJ, GitHub, software construction, and building a graphical user interface. 
@@ -30,7 +30,7 @@ First, you need to create a bookshelf with a name.
 - remove a book from your bookshelf
 - view the books on your bookshelf
 - view the total number of books you have
-- set a goal for number of books you want to read, with read books contributing to progress
+- set a goal for the number of books you want to read, with read books contributing to progress
 - view progress in reading goal
 - save your bookshelf to file
 - load a bookshelf from file
@@ -47,6 +47,14 @@ First, you need to create a bookshelf with a name.
 ### How to use
 1. Clone this repo
 2. Open the project in your favourite code editor with a Java compiler
-3. Run 'Main'
-4. A new window should open up asking for you to name your bookshelf
-5. Have fun tracking all the books on your bookshelf (or library if you've reached 1000 books!)
+4. Run 'Main'
+5. A new window should open up asking for you to name your bookshelf
+   <img width="508" alt="Screenshot 2023-08-09 at 1 26 26 PM" src="https://github.com/robinmatheson/GreatReads-GUI/assets/125790030/33ca4431-9655-4d45-9f4d-f623a9a9e212">
+6. You can input your custom name or press "Cancel" which will create a default bookshelf named "My Bookshelf"
+7. A new window will pop up where you are able to edit and view your bookshelf.
+   <img width="1412" alt="Screenshot 2023-08-09 at 1 28 25 PM" src="https://github.com/robinmatheson/GreatReads-GUI/assets/125790030/5b297198-3c55-447a-8798-31eeb28546b7">
+8. Have fun tracking all the books on your bookshelf (or library if you've reached 1000 books!)
+
+   *Here's an example of a bookshelf in use:*
+   <img width="1412" alt="Screenshot 2023-08-09 at 1 35 49 PM" src="https://github.com/robinmatheson/GreatReads-GUI/assets/125790030/dcc6b3ab-f707-4013-8b98-47b310e8bfab">
+   
