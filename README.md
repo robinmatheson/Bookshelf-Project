@@ -55,6 +55,8 @@ First, you need to create a bookshelf with a name.
    <img width="1412" alt="Screenshot 2023-08-09 at 1 28 25 PM" src="https://github.com/robinmatheson/GreatReads-GUI/assets/125790030/5b297198-3c55-447a-8798-31eeb28546b7">
 8. Have fun tracking all the books on your bookshelf (or library if you've reached 1000 books!)
 
-   *Here is a use example:* https://github.com/robinmatheson/GreatReads-GUI/assets/125790030/ee76086d-0366-4a78-a24a-2eee18857fd2
+   *Here is a use example:*
+   
+   <video width="500" src="https://github.com/robinmatheson/GreatReads-GUI/assets/125790030/ee76086d-0366-4a78-a24a-2eee18857fd2"/>
 
 
